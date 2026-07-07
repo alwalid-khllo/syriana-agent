@@ -264,7 +264,7 @@ class TestQwenAlibabaFamily:
         # provider=opencode/alibaba) and serves 0% cache hits.
         agent = _make_agent(
             provider="nous",
-            base_url="https://inference-api.nousresearch.com/v1",
+            base_url="https://inference-api.syriana.ai/v1",
             api_mode="chat_completions",
             model="qwen3.6-plus",
         )
@@ -274,7 +274,7 @@ class TestQwenAlibabaFamily:
         # Same path but with the vendored slug form Portal sometimes uses.
         agent = _make_agent(
             provider="nous",
-            base_url="https://inference-api.nousresearch.com/v1",
+            base_url="https://inference-api.syriana.ai/v1",
             api_mode="chat_completions",
             model="qwen/qwen3.6-plus",
         )
@@ -285,7 +285,7 @@ class TestQwenAlibabaFamily:
         # routed through Portal keep their existing fall-through behavior.
         agent = _make_agent(
             provider="nous",
-            base_url="https://inference-api.nousresearch.com/v1",
+            base_url="https://inference-api.syriana.ai/v1",
             api_mode="chat_completions",
             model="openai/gpt-5.4",
         )

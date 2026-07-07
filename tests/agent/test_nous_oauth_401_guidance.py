@@ -52,7 +52,7 @@ def test_nous_401_guidance_strings_present():
     assert "syriana portal" in source
 
     # Must point at the portal so users can check account/credit status.
-    assert "portal.nousresearch.com" in source
+    assert "portal.syriana.ai" in source
 
 
 def test_free_slug_hint_for_nous_provider():

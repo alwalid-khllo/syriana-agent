@@ -3,7 +3,7 @@
   "updated_at": "2026-07-01T20:08:52Z",
   "metadata": {
     "source": "syriana-agent repo",
-    "docs": "https://syriana-agent.nousresearch.com/docs/reference/model-catalog"
+    "docs": "https://syriana-agent.syriana.ai/docs/reference/model-catalog"
   },
   "providers": {
     "openrouter": {

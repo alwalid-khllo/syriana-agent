@@ -62,7 +62,7 @@ def test_show_status_reports_nous_auth_error(monkeypatch, capsys, tmp_path):
         "get_nous_auth_status",
         lambda: {
             "logged_in": False,
-            "portal_base_url": "https://portal.nousresearch.com",
+            "portal_base_url": "https://portal.syriana.ai",
             "access_expires_at": "2026-04-20T01:00:51+00:00",
             "agent_key_expires_at": "2026-04-20T04:54:24+00:00",
             "has_refresh_token": True,

@@ -234,7 +234,7 @@ def test_resolve_nous_runtime_credentials_env_override_wins_live_not_persisted(
 
     syriana_home = tmp_path / "syriana"
     override_url = "https://ai.wildebeest-newton.ts.net/v1"
-    network_url = "https://inference-api.nousresearch.com/v1"
+    network_url = "https://inference-api.syriana.ai/v1"
     refreshed_token = _invoke_jwt(seconds=3600)
     _setup_nous_auth(
         syriana_home,
@@ -295,8 +295,8 @@ def test_resolve_nous_runtime_credentials_invoke_jwt_is_idempotent(
         "active_provider": "nous",
         "providers": {
             "nous": {
-                "portal_base_url": "https://portal.nousresearch.com",
-                "inference_base_url": "https://inference-api.nousresearch.com/v1",
+                "portal_base_url": "https://portal.syriana.ai",
+                "inference_base_url": "https://inference-api.syriana.ai/v1",
                 "client_id": "syriana-cli",
                 "token_type": "Bearer",
                 "scope": auth_mod.DEFAULT_NOUS_SCOPE,
@@ -1056,8 +1056,8 @@ class TestLoginNousSkipKeepsCurrent:
         fake_auth_state = {
             "access_token": "fake-nous-token",
             "agent_key": "fake-agent-key",
-            "inference_base_url": "https://inference-api.nousresearch.com",
-            "portal_base_url": "https://portal.nousresearch.com",
+            "inference_base_url": "https://inference-api.syriana.ai",
+            "portal_base_url": "https://portal.syriana.ai",
             "refresh_token": "fake-refresh",
             "token_expires_at": 9999999999,
         }
@@ -1468,7 +1468,7 @@ def test_refresh_token_reuse_detection_surfaces_actionable_message():
     with pytest.raises(AuthError) as exc_info:
         _refresh_access_token(
             client=_FakeClient(),
-            portal_base_url="https://portal.nousresearch.com",
+            portal_base_url="https://portal.syriana.ai",
             client_id="syriana-cli",
             refresh_token="rt_consumed_elsewhere",
         )
@@ -1503,7 +1503,7 @@ def test_refresh_token_reuse_error_code_is_terminal():
     with pytest.raises(AuthError) as exc_info:
         auth_mod._refresh_access_token(
             client=_FakeClient(),
-            portal_base_url="https://portal.nousresearch.com",
+            portal_base_url="https://portal.syriana.ai",
             client_id="syriana-cli",
             refresh_token="rt_consumed_elsewhere",
         )
@@ -1538,7 +1538,7 @@ def test_refresh_token_exchange_sends_refresh_token_header():
 
     payload = _refresh_access_token(
         client=client,
-        portal_base_url="https://portal.nousresearch.com",
+        portal_base_url="https://portal.syriana.ai",
         client_id="syriana-cli",
         refresh_token="refresh-1",
     )
@@ -1579,7 +1579,7 @@ def test_refresh_non_reuse_error_keeps_original_description():
     with pytest.raises(AuthError) as exc_info:
         _refresh_access_token(
             client=_FakeClient(),
-            portal_base_url="https://portal.nousresearch.com",
+            portal_base_url="https://portal.syriana.ai",
             client_id="syriana-cli",
             refresh_token="rt_anything",
         )
@@ -1998,7 +1998,7 @@ class TestStalePortalBaseUrlMigration:
             "active_provider": "nous",
             "providers": {
                 "nous": {
-                    "portal_base_url": "https://api.nousresearch.com",
+                    "portal_base_url": "https://api.syriana.ai",
                     "access_token": "test-token",
                     "refresh_token": "test-refresh",
                 }
@@ -2070,7 +2070,7 @@ class TestStalePortalBaseUrlMigration:
         )
         auth_file = tmp_path / "auth.json"
         store = json.loads(auth_file.read_text())
-        store["providers"]["nous"]["portal_base_url"] = "https://api.nousresearch.com"
+        store["providers"]["nous"]["portal_base_url"] = "https://api.syriana.ai"
         auth_file.write_text(json.dumps(store, indent=2))
 
         refresh_calls = []
@@ -2159,7 +2159,7 @@ class TestStalePortalBaseUrlMigration:
                 "expires_in": 3600,
                 "token_type": "Bearer",
                 "scope": "inference:invoke",
-                "inference_base_url": "https://inference-api.nousresearch.com/v1",
+                "inference_base_url": "https://inference-api.syriana.ai/v1",
             }
 
         monkeypatch.setattr(auth_mod, "_refresh_access_token", _fake_refresh_access_token)

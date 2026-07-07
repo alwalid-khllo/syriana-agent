@@ -1828,7 +1828,7 @@ def _try_nous(vision: bool = False) -> Tuple[Optional[OpenAI], Optional[str]]:
     # if another session already recorded a 429, skip Nous entirely
     # to avoid piling more requests onto the tapped RPH bucket.
     try:
-        from agent.nous_rate_guard import nous_rate_limit_remaining
+        from agent.rate_guard import nous_rate_limit_remaining
         _remaining = nous_rate_limit_remaining()
         if _remaining is not None and _remaining > 0:
             logger.debug(

@@ -53,7 +53,7 @@ def test_resolve_runtime_provider_nous_pool_uses_env_base_url_override(monkeypat
         agent_key="pool-token",
         agent_key_expires_at="2099-01-01T00:00:00+00:00",
         scope="inference:invoke",
-        runtime_base_url="https://inference-api.nousresearch.com/v1",
+        runtime_base_url="https://inference-api.syriana.ai/v1",
     )
 
     class _Pool:
@@ -1098,7 +1098,7 @@ def test_named_custom_provider_does_not_shadow_builtin_provider(monkeypatch):
         rp,
         "resolve_nous_runtime_credentials",
         lambda **kwargs: {
-            "base_url": "https://inference-api.nousresearch.com/v1",
+            "base_url": "https://inference-api.syriana.ai/v1",
             "api_key": "nous-runtime-key",
             "source": "portal",
             "expires_at": None,
@@ -1108,7 +1108,7 @@ def test_named_custom_provider_does_not_shadow_builtin_provider(monkeypatch):
     resolved = rp.resolve_runtime_provider(requested="nous")
 
     assert resolved["provider"] == "nous"
-    assert resolved["base_url"] == "https://inference-api.nousresearch.com/v1"
+    assert resolved["base_url"] == "https://inference-api.syriana.ai/v1"
     assert resolved["api_key"] == "nous-runtime-key"
     assert resolved["requested_provider"] == "nous"
 

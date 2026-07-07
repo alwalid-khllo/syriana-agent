@@ -487,7 +487,7 @@ class TestTryRecoverPrimaryTransport:
         assert result is False
 
     def test_skipped_for_nous_provider(self):
-        agent = _make_agent(provider="nous", base_url="https://inference.nous.nousresearch.com/v1")
+        agent = _make_agent(provider="nous", base_url="https://inference.nous.syriana.ai/v1")
         error = _make_transport_error("ReadTimeout")
 
         result = agent._try_recover_primary_transport(

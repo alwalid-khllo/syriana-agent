@@ -99,7 +99,7 @@ def test_nous_adapter_authenticated_with_agent_key(tmp_path, monkeypatch):
     _write_auth_store(tmp_path, {
         "agent_key": "ov-test-key",
         "agent_key_expires_at": "2099-01-01T00:00:00Z",
-        "inference_base_url": "https://inference-api.nousresearch.com/v1",
+        "inference_base_url": "https://inference-api.syriana.ai/v1",
     })
     assert NousPortalAdapter().is_authenticated()
 
@@ -120,13 +120,13 @@ def test_nous_adapter_get_credential_uses_runtime_resolver(tmp_path, monkeypatch
         "access_token": "access-tok",
         "refresh_token": "refresh-tok",
         "client_id": "syriana-cli",
-        "portal_base_url": "https://portal.nousresearch.com",
-        "inference_base_url": "https://inference-api.nousresearch.com/v1",
+        "portal_base_url": "https://portal.syriana.ai",
+        "inference_base_url": "https://inference-api.syriana.ai/v1",
     })
 
     refreshed_state = {
         "api_key": "jwt-bearer",
-        "base_url": "https://inference-api.nousresearch.com/v1",
+        "base_url": "https://inference-api.syriana.ai/v1",
         "expires_at": "2099-01-01T00:00:00Z",
     }
 
@@ -139,7 +139,7 @@ def test_nous_adapter_get_credential_uses_runtime_resolver(tmp_path, monkeypatch
 
     mock_resolve.assert_called_once()
     assert cred.bearer == "jwt-bearer"
-    assert cred.base_url == "https://inference-api.nousresearch.com/v1"
+    assert cred.base_url == "https://inference-api.syriana.ai/v1"
     assert cred.expires_at == "2099-01-01T00:00:00Z"
     assert cred.token_type == "Bearer"
 
@@ -150,13 +150,13 @@ def test_nous_adapter_retry_credential_force_refreshes_on_jwt_401(tmp_path, monk
         "access_token": "jwt-access",
         "refresh_token": "refresh-tok",
         "client_id": "syriana-cli",
-        "portal_base_url": "https://portal.nousresearch.com",
-        "inference_base_url": "https://inference-api.nousresearch.com/v1",
+        "portal_base_url": "https://portal.syriana.ai",
+        "inference_base_url": "https://inference-api.syriana.ai/v1",
         "agent_key": "jwt-access",
     })
     refreshed_state = {
         "api_key": "fresh-jwt-bearer",
-        "base_url": "https://inference-api.nousresearch.com/v1",
+        "base_url": "https://inference-api.syriana.ai/v1",
         "expires_at": "2099-01-01T00:00:00Z",
     }
 
@@ -168,7 +168,7 @@ def test_nous_adapter_retry_credential_force_refreshes_on_jwt_401(tmp_path, monk
         cred = adapter.get_retry_credential(
             failed_credential=UpstreamCredential(
                 bearer="header.jwt.signature",
-                base_url="https://inference-api.nousresearch.com/v1",
+                base_url="https://inference-api.syriana.ai/v1",
             ),
             status_code=401,
         )
@@ -193,7 +193,7 @@ def test_nous_adapter_retry_credential_skips_non_401(tmp_path, monkeypatch):
         cred = adapter.get_retry_credential(
             failed_credential=UpstreamCredential(
                 bearer="opaque-bearer",
-                base_url="https://inference-api.nousresearch.com/v1",
+                base_url="https://inference-api.syriana.ai/v1",
             ),
             status_code=403,
         )
@@ -305,7 +305,7 @@ def test_nous_adapter_concurrent_refresh_serialized(tmp_path, monkeypatch):
             return {
                 "api_key": f"key-{idx}",
                 "expires_at": "2099-01-01T00:00:00Z",
-                "base_url": "https://inference-api.nousresearch.com/v1",
+                "base_url": "https://inference-api.syriana.ai/v1",
             }
         finally:
             in_flight.clear()

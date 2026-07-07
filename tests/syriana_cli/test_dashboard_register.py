@@ -75,7 +75,7 @@ def _fake_http_ok(payload: dict):
 
 
 class TestHappyPath:
-    def _run(self, *, args, account_token="tok_abc", portal="https://portal.nousresearch.com",
+    def _run(self, *, args, account_token="tok_abc", portal="https://portal.syriana.ai",
              response=None, captured=None, existing_client_id=None):
         response = response or {
             "client_id": "agent:selfhost-1",
@@ -358,12 +358,12 @@ class TestCustomPortalPersistence:
         # User explicitly asked for the production portal — honour the explicit
         # request and persist it (the no-flag path would skip the default).
         saved = self._run(
-            args=_ns(portal_url="https://portal.nousresearch.com"),
-            portal="https://portal.nousresearch.com",
+            args=_ns(portal_url="https://portal.syriana.ai"),
+            portal="https://portal.syriana.ai",
             existing_portal=None,
         )
         assert (
-            saved["SYRIANA_DASHBOARD_PORTAL_URL"] == "https://portal.nousresearch.com"
+            saved["SYRIANA_DASHBOARD_PORTAL_URL"] == "https://portal.syriana.ai"
         )
 
     def test_explicit_custom_url_equal_to_existing_is_noop(self, capsys):
@@ -379,7 +379,7 @@ class TestCustomPortalPersistence:
         # No custom URL supplied, resolves to default → not written.
         saved = self._run(
             args=_ns(),
-            portal="https://portal.nousresearch.com",
+            portal="https://portal.syriana.ai",
             existing_portal=None,
         )
         assert "SYRIANA_DASHBOARD_PORTAL_URL" not in saved
@@ -441,7 +441,7 @@ class TestPublicUrlPersistence:
         ), patch("syriana_cli.config.is_managed", return_value=False), patch.dict(
             dr.os.environ, {}, clear=False
         ), patch.object(
-            dr, "_resolve_portal_base_url", return_value="https://portal.nousresearch.com"
+            dr, "_resolve_portal_base_url", return_value="https://portal.syriana.ai"
         ), patch(
             "syriana_cli.config.get_env_value", side_effect=fake_get_env_value
         ), patch(
@@ -564,28 +564,28 @@ class TestPortalResolution:
     def test_falls_back_to_stored_login_portal(self):
         with patch(
             "syriana_cli.auth.get_provider_auth_state",
-            return_value={"portal_base_url": "https://portal.staging-nousresearch.com"},
+            return_value={"portal_base_url": "https://portal.staging-syriana.ai"},
         ):
             assert (
                 dr._resolve_portal_base_url(None)
-                == "https://portal.staging-nousresearch.com"
+                == "https://portal.staging-syriana.ai"
             )
 
     def test_blank_override_ignored(self):
         with patch(
             "syriana_cli.auth.get_provider_auth_state",
-            return_value={"portal_base_url": "https://portal.staging-nousresearch.com"},
+            return_value={"portal_base_url": "https://portal.staging-syriana.ai"},
         ):
             assert (
                 dr._resolve_portal_base_url("   ")
-                == "https://portal.staging-nousresearch.com"
+                == "https://portal.staging-syriana.ai"
             )
 
 
 class TestPortalErrors:
     def _run_http_error(self, code, body):
         err = urllib.error.HTTPError(
-            url="https://portal.nousresearch.com/api/oauth/self-hosted-client",
+            url="https://portal.syriana.ai/api/oauth/self-hosted-client",
             code=code,
             msg="err",
             hdrs=None,
@@ -595,7 +595,7 @@ class TestPortalErrors:
         with patch(
             "syriana_cli.auth.resolve_nous_access_token", return_value="tok"
         ), patch("syriana_cli.config.is_managed", return_value=False), patch.object(
-            dr, "_resolve_portal_base_url", return_value="https://portal.nousresearch.com"
+            dr, "_resolve_portal_base_url", return_value="https://portal.syriana.ai"
         ), patch.object(dr.urllib.request, "urlopen", side_effect=err):
             with pytest.raises(SystemExit) as exc:
                 dr.cmd_dashboard_register(_ns())

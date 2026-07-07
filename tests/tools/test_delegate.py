@@ -1401,7 +1401,7 @@ class TestDelegationProviderIntegration(unittest.TestCase):
         }
         parent = _make_mock_parent(depth=0)
         parent.provider = "nous"
-        parent.base_url = "https://inference-api.nousresearch.com/v1"
+        parent.base_url = "https://inference-api.syriana.ai/v1"
         parent.api_key = "nous-key-abc"
 
         with patch("run_agent.AIAgent") as MockAgent:

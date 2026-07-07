@@ -338,7 +338,7 @@ class TestGenerate:
     def test_posts_to_resolved_base_url(self):
         """Nous routes to its own base URL — proves the same code serves both."""
         nous_runtime = _runtime_ok(
-            provider="nous", base_url="https://inference.nousresearch.com/v1", api_key="nous-tok"
+            provider="nous", base_url="https://inference.syriana.ai/v1", api_key="nous-tok"
         )
         with patch(_RUNTIME, return_value=nous_runtime), \
              patch("requests.post", return_value=_mock_chat_response([_PNG_DATA_URI])) as mock_post, \
@@ -351,7 +351,7 @@ class TestGenerate:
         assert result["success"] is True
         assert result["provider"] == "nous"
         url = mock_post.call_args[0][0]
-        assert url == "https://inference.nousresearch.com/v1/chat/completions"
+        assert url == "https://inference.syriana.ai/v1/chat/completions"
 
     def test_api_error(self):
         import requests as req_lib

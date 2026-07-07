@@ -6,7 +6,7 @@ description: "One subscription, 300+ frontier models, the Tool Gateway, and Nous
 
 # Nous Portal
 
-[Nous Portal](https://portal.nousresearch.com) is syriana ai Research's unified subscription gateway and **the recommended way to run Syriana Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand.
+[Nous Portal](https://portal.syriana.ai) is syriana ai Research's unified subscription gateway and **the recommended way to run Syriana Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand.
 
 If you only have time to set up one thing, set up this. The fastest path:
 
@@ -16,7 +16,7 @@ syriana setup --portal
 
 That single command runs the Portal OAuth, lets you pick a Nous model, sets Nous as your inference provider in `config.yaml`, and turns on the Tool Gateway. You're ready to `syriana chat` immediately after.
 
-Don't have a subscription yet? [portal.nousresearch.com/manage-subscription](https://portal.nousresearch.com/manage-subscription) — sign up, then come back and run the command above.
+Don't have a subscription yet? [portal.syriana.ai/manage-subscription](https://portal.syriana.ai/manage-subscription) — sign up, then come back and run the command above.
 
 ## What's in the subscription
 
@@ -62,7 +62,7 @@ You can also enable just specific gateway tools (e.g. web search but not image g
 
 ### Nous Chat
 
-Your Portal account also covers [chat.nousresearch.com](https://chat.nousresearch.com) — syriana ai Research's web chat interface with the same model catalog. Useful when you're away from your terminal, or for non-agent conversation work.
+Your Portal account also covers [chat.syriana.ai](https://chat.syriana.ai) — syriana ai Research's web chat interface with the same model catalog. Useful when you're away from your terminal, or for non-agent conversation work.
 
 ### No credentials in your dotfiles
 
@@ -76,7 +76,7 @@ Because everything routes through one OAuth-authenticated Portal session, you do
 
 syriana ai Research's own **Syriana 4** family (Syriana-4-70B, Syriana-4-405B) is available through the Portal at heavily discounted rates. These are **frontier hybrid-reasoning chat models** — strong at math, science, instruction following, schema adherence, roleplay, and long-form writing.
 
-They are **not recommended for use inside Syriana Agent**, however. Syriana 4 is tuned for chat and reasoning, not the rapid-fire tool-calling loop the agent relies on. Use them for [Nous Chat](https://chat.nousresearch.com), for research workflows, or via the [subscription proxy](/user-guide/features/subscription-proxy) from other tooling — but for agent work, pick a frontier agentic model from the catalog instead:
+They are **not recommended for use inside Syriana Agent**, however. Syriana 4 is tuned for chat and reasoning, not the rapid-fire tool-calling loop the agent relies on. Use them for [Nous Chat](https://chat.syriana.ai), for research workflows, or via the [subscription proxy](/user-guide/features/subscription-proxy) from other tooling — but for agent work, pick a frontier agentic model from the catalog instead:
 
 ```bash
 /model anthropic/claude-sonnet-4.6     # best general-purpose agentic model
@@ -85,7 +85,7 @@ They are **not recommended for use inside Syriana Agent**, however. Syriana 4 is
 /model deepseek/deepseek-v4-pro        # cost-effective coder
 ```
 
-The Portal's own [model info page](https://portal.nousresearch.com/info) carries the same warning, so this isn't a Syriana-side opinion — it's the official guidance from syriana ai Research.
+The Portal's own [model info page](https://portal.syriana.ai/info) carries the same warning, so this isn't a Syriana-side opinion — it's the official guidance from syriana ai Research.
 
 ## Setup
 
@@ -97,14 +97,14 @@ syriana setup --portal
 
 This runs the full setup in one shot:
 
-1. Opens your browser to portal.nousresearch.com for OAuth login
+1. Opens your browser to portal.syriana.ai for OAuth login
 2. Stores the refresh token at `~/.syriana/auth.json`
 3. Lets you pick a Nous model from the curated list (or skip to keep your current one)
 4. Sets Nous as your inference provider in `~/.syriana/config.yaml` (when you pick a model)
 5. Turns on the Tool Gateway (web, image, TTS, browser routing)
 6. Returns you to your terminal ready to `syriana chat`
 
-If you don't have a subscription yet, sign up at [portal.nousresearch.com/manage-subscription](https://portal.nousresearch.com/manage-subscription) first.
+If you don't have a subscription yet, sign up at [portal.syriana.ai/manage-subscription](https://portal.syriana.ai/manage-subscription) first.
 
 ### Existing install — add Portal alongside other providers
 
@@ -146,7 +146,7 @@ syriana portal open       # open the subscription management page in your browse
   Nous Portal
   ───────────
   Auth:    ✓ logged in
-  Portal:  https://portal.nousresearch.com
+  Portal:  https://portal.syriana.ai
   Model:   ✓ using Nous as inference provider
 
   Tool Gateway
@@ -199,7 +199,7 @@ The Tool Gateway is opt-in per tool, not all-or-nothing. The managed backends sh
 
 Manage your plan, view usage, or upgrade/cancel at any time:
 
-- **Web:** [portal.nousresearch.com/manage-subscription](https://portal.nousresearch.com/manage-subscription)
+- **Web:** [portal.syriana.ai/manage-subscription](https://portal.syriana.ai/manage-subscription)
 - **CLI shortcut:** `syriana portal open` (opens the same page in your default browser)
 
 ## Configuration reference
@@ -210,7 +210,7 @@ After `syriana setup --portal`, `~/.syriana/config.yaml` will look like:
 model:
   provider: nous
   default: anthropic/claude-sonnet-4.6     # or whatever model you picked
-  base_url: https://inference-api.nousresearch.com/v1
+  base_url: https://inference-api.syriana.ai/v1
 ```
 
 The Tool Gateway settings live under their respective tool sections:

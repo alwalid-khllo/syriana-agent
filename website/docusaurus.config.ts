@@ -7,7 +7,7 @@ const config: Config = {
   tagline: 'The self-improving AI agent',
   favicon: 'img/favicon.ico',
 
-  url: 'https://syriana-agent.nousresearch.com',
+  url: 'https://syriana-agent.syriana.ai',
   baseUrl: '/docs/',
 
   organizationName: 'SyrianaAIResearch',
@@ -131,7 +131,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: 'https://syriana-agent.nousresearch.com/',
+          href: 'https://syriana-agent.syriana.ai/',
           label: 'Download',
           position: 'left',
         },
@@ -140,7 +140,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://syriana-agent.nousresearch.com',
+          href: 'https://syriana-agent.syriana.ai',
           label: 'Home',
           position: 'right',
         },
@@ -179,13 +179,13 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            { label: 'Desktop Download', href: 'https://syriana-agent.nousresearch.com/' },
+            { label: 'Desktop Download', href: 'https://syriana-agent.syriana.ai/' },
             { label: 'GitHub', href: 'https://github.com/SyrianaAIResearch/syriana-agent' },
-            { label: 'syriana ai Research', href: 'https://nousresearch.com' },
+            { label: 'syriana ai Research', href: 'https://syriana.ai' },
           ],
         },
       ],
-      copyright: `Built by <a href="https://nousresearch.com">syriana ai Research</a> · MIT License · ${new Date().getFullYear()}`,
+      copyright: `Built by <a href="https://syriana.ai">syriana ai Research</a> · MIT License · ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,

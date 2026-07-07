@@ -631,4 +631,4 @@ def test_topup_url_strips_trailing_slash_and_encodes_slug():
 
 def test_topup_url_defaults_to_production_portal_for_none():
     url = nous_portal_topup_url(None)
-    assert url == "https://portal.nousresearch.com/billing?topup=open"
+    assert url == "https://portal.syriana.ai/billing?topup=open"

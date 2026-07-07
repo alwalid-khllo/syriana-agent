@@ -134,8 +134,8 @@ def _is_finite_num(v: Any) -> TypeGuard[float]:
     return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
 
 
-def build_nous_credits_snapshot(account_info) -> Optional[AccountUsageSnapshot]:
-    """Map a NousPortalAccountInfo into an AccountUsageSnapshot for /usage.
+def build_syriana_credits_snapshot(account_info) -> Optional[AccountUsageSnapshot]:
+    """Map a SyrianaPortalAccountInfo into an AccountUsageSnapshot for /usage.
 
     Shows dollar magnitudes (subscription / top-up / total) + renewal date + a
     portal CTA. When the portal supplies a subscription denominator
@@ -230,7 +230,7 @@ def build_nous_credits_snapshot(account_info) -> Optional[AccountUsageSnapshot]:
         return None
 
 
-def nous_credits_lines(*, markdown: bool = False, timeout: float = 10.0) -> list[str]:
+def syriana_credits_lines(*, markdown: bool = False, timeout: float = 10.0) -> list[str]:
     """Return rendered Nous-credits /usage lines, or [] when there's nothing to show.
 
     Account-independent of any live agent: gated on "a Nous account is logged in"
@@ -271,7 +271,7 @@ def nous_credits_lines(*, markdown: bool = False, timeout: float = 10.0) -> list
             account = pool.submit(
                 get_nous_portal_account_info, force_fresh=True
             ).result(timeout=timeout)
-        snapshot = build_nous_credits_snapshot(account)
+        snapshot = build_syriana_credits_snapshot(account)
         return render_account_usage_lines(snapshot, markdown=markdown)
     except Exception:
         # Fail-open (caller shows nothing), but leave a breadcrumb so a dead
@@ -392,9 +392,9 @@ def build_credits_view(*, markdown: bool = False, timeout: float = 10.0) -> Cred
     if account is None or not getattr(account, "logged_in", False):
         return not_logged_in
 
-    snapshot = build_nous_credits_snapshot(account)
+    snapshot = build_syriana_credits_snapshot(account)
     # Balance lines = the snapshot block minus the two trailing affordance lines
-    # ("Top up: <url>" + "(or run /credits)") that build_nous_credits_snapshot
+    # ("Top up: <url>" + "(or run /credits)") that build_syriana_credits_snapshot
     # appends for the /usage surface. /credits renders its own button/panel.
     balance_lines: list[str] = []
     if snapshot is not None:
