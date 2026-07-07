@@ -12,124 +12,138 @@
 
 ---
 
-## 🌟 What is Syriana Agent?
-
-**Syriana Agent** is a next-generation, open-source AI agent platform — a powerful autonomous assistant that lives in your terminal, Telegram, Discord, or desktop. Unlike ordinary chatbots, Syriana features a **built-in learning loop**: it creates skills from experience, improves them during use, remembers across conversations, and grows smarter over time.
-
-Think of it as your **personal AI engineer** — always ready, always learning, always working for you.
+> **Syriana Agent** — The self-improving AI agent with a built-in learning loop. It creates skills from experience, improves them during use, persists memory across sessions, and builds a deepening model of who you are over time. Works with any AI provider, runs on any platform, extends through plugins and skills. Open source. MIT License.
 
 ---
 
-## 🧠 Multi-Provider — Use Any AI Model You Want
+## 🧠 Provider-Agnostic — Use Any AI Model
 
-Syriana is **provider-agnostic**. You bring your own API key from any provider, and Syriana works immediately — no lock-in, no subscriptions, no hidden fees.
-
-### 🔑 Supported Providers (All Major + Local)
+Syriana works with **every major AI provider** — and many obscure ones. You bring your own API key; Syriana handles the rest. No lock-in, no subscriptions, no hidden costs.
 
 | Category | Providers |
 |----------|-----------|
-| ☁️ **Cloud APIs** | OpenAI (GPT-4, GPT-4o), Anthropic (Claude 3.5/4), Google (Gemini 2.0+), OpenRouter (200+ models), DeepSeek, Moonshot/Kimi, MiniMax, Z.AI/GLM, NVIDIA NIM, NovitaAI, Amazon Bedrock, Azure OpenAI, Google Vertex AI |
-| 🏠 **Local Models** | Ollama (Llama, Mistral, Qwen, DeepSeek local), LM Studio, vLLM, Text Generation WebUI (Oobabooga) |
-| 🆓 **Free APIs** | Google AI Studio (free tier), OpenRouter free models, local models (no cost) |
-| 🔧 **Custom** | Any OpenAI-compatible endpoint — self-hosted, private, air-gapped |
+| **Cloud APIs** | OpenAI (GPT-4, GPT-4o, o1, o3), Anthropic (Claude 3.5, Claude 4), Google (Gemini 2.0+), OpenRouter (200+ models), DeepSeek, Moonshot/Kimi, MiniMax, Z.AI/GLM, NVIDIA NIM, NovitaAI, Amazon Bedrock, Azure OpenAI, Google Vertex AI |
+| **Local & Self-Hosted** | Ollama (every model), LM Studio, vLLM, Text Generation WebUI, llama.cpp, any OpenAI-compatible endpoint |
+| **Free Tiers** | Google AI Studio, OpenRouter free models, local models (zero cost) |
+| **Custom** | Bring your own endpoint — air-gapped, private, or on-premise |
 
-**No vendor lock-in.** Switch between providers with a single command: `syriana model`
+Switch providers with a single command — no config files, no restarts:
 
----
-
-## ✨ What Makes Syriana Different?
-
-### 🔄 Built-in Learning Loop (Unique)
-Most AI agents are **stateless** — once the conversation ends, everything is forgotten. Syriana is different:
-- **Creates skills** from its own experience automatically
-- **Improves skills** during use based on what works
-- **Persists memory** across sessions — it remembers who you are
-- **Searches past conversations** for context when needed
-- **Builds a user model** of your preferences and style over time
-
-### 🛠️ Skills System
-Syriana comes with a **rich library of 450+ built-in skills** that give it superpowers:
-
-| Skill Category | Examples |
-|----------------|----------|
-| 💻 **Software Development** | Code review, debugging, TDD, architecture design, refactoring, Git workflows |
-| 🔒 **Cybersecurity** | Penetration testing, OSINT, vulnerability analysis, forensics |
-| 📊 **Data Science** | Data analysis, visualization, Jupyter notebooks, ML pipelines |
-| 📝 **Productivity** | Email management, document editing, PDF manipulation, presentations |
-| 🌐 **Web & Research** | Web search, YouTube transcripts, academic papers (arXiv), news monitoring |
-| 🎨 **Creative** | Image generation, ASCII art, music/songwriting, video creation, architecture diagrams |
-| 🏢 **Business & Finance** | Market analysis, DCF modeling, LBO modeling, presentations, Excel automation |
-| 🔗 **Channels** | Telegram, Discord, Slack, WhatsApp, Signal, Email, SMS, WeChat, and more |
-
-Each skill is a reusable capability the agent can call on demand — or create new ones automatically.
-
-### 🌍 Works Anywhere
-| Platform | Mode |
-|----------|------|
-| 💻 **Terminal (CLI)** | Full TUI with multiline editing, slash commands, streaming output |
-| 📱 **Telegram** | Chat from your phone while Syriana runs on a cloud VM |
-| 💬 **Discord** | Full bot integration with slash commands |
-| 🏢 **Slack** | Team collaboration |
-| 📧 **Email / SMS / Signal / WhatsApp** | Cross-platform messaging |
-| 🖥️ **Desktop App** | Native macOS, Windows, Linux (Electron) |
-| 🌐 **Web Dashboard** | Browser-based UI |
-
-### 🔌 Extensible Architecture
-- **30+ plugins** — extend functionality without touching core
-- **450+ skills** — built-in capabilities library
-- **MCP server support** — connect any MCP-compatible tool
-- **Custom tools** — write your own in Python
-
-### 🖥️ Cross-Platform
-Linux, macOS, Windows (native), Android (Termux) — run it anywhere, even on a $5 VPS.
+```bash
+syriana model
+```
 
 ---
 
-## 🚀 Quick Install
+## 🔄 The Learning Loop — What Makes Syriana Different
 
-### Linux / macOS / WSL
+Most AI agents are **stateless shells** — the conversation ends, everything is forgotten. Syriana is the **only open-source agent with a closed learning loop**:
 
+- **Autonomous skill creation** — Syriana creates new skills from its own experience, without you asking
+- **Skill self-improvement** — It refines skills during use, learning what works and what doesn't
+- **Persistent memory** — Agent-curated memory with periodic self-nudges to retain what matters
+- **Cross-session recall** — FTS5 full-text search across past conversations, with LLM summarization
+- **User modeling** — Builds a deepening model of your preferences, style, and patterns across sessions
+
+The more you use it, the better it gets. It learns like a person — by doing, remembering, and improving.
+
+---
+
+## 🛠️ Built-in Skills — 450+ Capabilities
+
+Syriana ships with a **450+ skill library** that gives it superpowers across every domain:
+
+| Domain | Skills |
+|--------|--------|
+| **💻 Software Development** | Code review, debugging, TDD/BDD, architecture design, refactoring, Git workflows, dependency analysis |
+| **🔒 Cybersecurity** | Pentesting, OSINT, vulnerability research, forensics, fuzzing, exploit analysis, red teaming |
+| **📊 Data Science & ML** | Data analysis, visualization, Jupyter notebooks, ML pipelines, feature engineering, model evaluation |
+| **📝 Productivity** | Email management, document editing, PDF manipulation, presentations, note-taking, scheduling |
+| **🌐 Web & Research** | Web search & extract, YouTube analysis, arXiv papers, news monitoring, blog tracking, RSS |
+| **🎨 Creative** | Image generation, ASCII art, music & songwriting, video creation, infographics, architecture diagrams |
+| **🏢 Business & Finance** | Market analysis, DCF/LBO/M&A modeling, Excel automation, pitch decks, financial reports |
+| **🔗 Communication** | Telegram, Discord, Slack, WhatsApp, Signal, Email, SMS, WeChat, Matrix, Teams |
+
+Each skill is a **reusable, composable capability** that Syriana can call on demand — or create new ones automatically as it discovers patterns in your work.
+
+---
+
+## 🌍 Lives Where You Do
+
+Syriana isn't tied to your laptop. **It runs everywhere** — and you talk to it from anywhere:
+
+| Interface | Details |
+|-----------|---------|
+| **💻 Terminal (CLI)** | Full TUI — multiline editing, slash commands with autocomplete, streaming output, session history, interrupt & redirect |
+| **📱 Telegram** | Chat from your phone while Syriana runs on a cloud VM. Voice memos transcribed automatically |
+| **💬 Discord** | Full bot — slash commands, threads, voice channels |
+| **🏢 Slack** | Team collaboration with threading |
+| **📧 Email / SMS / Signal / WhatsApp** | Cross-platform messaging from a single gateway |
+| **🖥️ Desktop App** | Native - macOS, Windows, Linux (Electron). Chat with streaming tool output, side-by-side previews, file browser, voice, settings |
+| **🌐 Web Dashboard** | Browser-based admin & chat |
+
+**20+ platforms from one gateway** — one process, one config, every channel.
+
+---
+
+## ⚡ Runs Anywhere (Not Just Your Laptop)
+
+Deploy on infrastructure that fits your needs:
+
+| Backend | Use Case |
+|---------|----------|
+| **Local** | Your machine — zero infra |
+| **Docker** | Containerized, reproducible |
+| **SSH** | Remote server, cloud VM |
+| **Daytona** | Serverless — hibernates when idle, costs near zero |
+| **Modal** | Serverless GPU/CPU |
+| **Singularity** | HPC clusters |
+
+Run it on a **$5 VPS**, a **GPU cluster**, or **serverless infrastructure** that costs nearly nothing when idle. It's not tied to your machine — talk to it from Telegram while it works on a cloud VM.
+
+---
+
+## 🔌 Extensible Architecture
+
+- **30+ plugins** — Modular extensions for custom functionality (kanban, browser, image gen, cron, disk cleanup, and more)
+- **450+ skills** — Built-in capability library. Also compatible with [agentskills.io](https://agentskills.io) open standard
+- **MCP servers** — Connect any MCP-compatible tool with full tool filtering
+- **Custom Python tools** — Write your own via `execute_code`
+- **Subagent delegation** — Spawn isolated subagents for parallel workstreams
+
+---
+
+## 🖥️ Cross-Platform
+
+Linux, macOS, Windows (native + WSL2), Android (Termux) — full support on every platform.
+
+### Quick Install
+
+**Linux / macOS / WSL:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.sh | bash
 ```
 
-### Windows (PowerShell)
-
+**Windows (PowerShell):**
 ```powershell
 powershell -ExecutionPolicy ByPass -c "iex (irm https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.ps1)"
 ```
 
-### Windows — Arabic Users (ConEmu) 🇸🇦
+**Windows Arabic Users — ConEmu 🇸🇦:**
+> The standard Windows terminal doesn't fully support Arabic (RTL) display. Install **ConEmu** ([conemu.github.io](https://conemu.github.io)) — a modern terminal that handles Arabic script perfectly — then run the install command inside it.
 
-> **⚠️ Important for Arabic Windows users:**
-> The standard Windows Terminal does not fully support Arabic text (RTL) display. To use Syriana Agent with full Arabic support, install **ConEmu** — a modern Windows terminal that handles Arabic script perfectly.
-
-1. Download ConEmu: [https://conemu.github.io](https://conemu.github.io)
-2. Install and launch ConEmu
-3. Run the PowerShell install command above inside ConEmu
-
-### Android (Termux)
-
+**Android (Termux):**
 ```bash
 pkg update && pkg upgrade -y
 pkg install python git curl -y
 pip install syriana-agent --no-deps
-# See full guide: https://syriana-agent.fixology.dev/docs/getting-started/termux
 ```
 
----
-
-## 🔧 Quick Start After Installation
+### After Installation
 
 ```bash
 # Set your API key (any provider)
 syriana config set OPENROUTER_API_KEY your_key_here
-
-# Or use OpenAI
-syriana config set OPENAI_API_KEY sk-your_key_here
-
-# Switch model provider any time
-syriana model
 
 # Start chatting
 syriana chat
@@ -137,27 +151,27 @@ syriana chat
 # Run gateway for Telegram / Discord
 syriana gateway run
 
-# Update to latest version
+# Update to the latest version
 syriana update
 ```
 
 ---
 
-## 📦 What's Included
+## 📦 What's Inside
 
 | Component | Description |
 |-----------|-------------|
-| `syriana` CLI | Chat, config, skills, tools, gateway, cron |
-| 450+ Skills | Pre-built capabilities for every domain |
-| 30+ Plugins | Modular extensions for custom functionality |
-| Messaging Gateway | Telegram, Discord, Slack, WhatsApp, Signal, Email |
-| Desktop App | macOS, Windows, Linux (native) |
-| Full Documentation | Docusaurus site with guides, API reference |
-| 1,900+ Tests | Production-grade testing suite |
+| `syriana` CLI | Chat, config, skills, tools, gateway, cron — full control |
+| Gateway | 20+ messaging platforms — one process, every channel |
+| Skills Library | 450+ built-in capabilities across every domain |
+| Plugins | 30+ modular extensions |
+| Desktop App | macOS, Windows, Linux — native, polished, powerful |
+| Documentation | Full Docusaurus site — guides, API reference, tutorials |
+| 1,900+ Tests | Production-grade — CI/CD, linting, type checking |
 
 ---
 
-## 💬 Community & Support
+## 💬 Community
 
 - **Telegram Group:** [https://t.me/syriana_ai](https://t.me/syriana_ai) — Join us! Ask questions, share ideas, contribute
 - **GitHub Issues:** Bug reports & feature requests
@@ -167,7 +181,7 @@ syriana update
 
 ## 🤝 Contributing
 
-We welcome contributions from everyone! See our [Contributing Guide](CONTRIBUTING.md) to get started.
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
 ---
 
@@ -185,131 +199,85 @@ MIT — see [LICENSE](LICENSE) for details. Free to use, modify, and distribute.
   <img src="assets/banner.gif" alt="Syriana Agent" width="100%">
 </p>
 
-## 🌟 ما هو سيريانا أيجنت؟
-
-**سيريانا أيجنت (Syriana Agent)** هو وكيل ذكاء اصطناعي متطور مفتوح المصدر — مساعد مستقل يعمل في التيرمنال، تلغرام، دسكورد، أو سطح المكتب. على عكس روبوتات المحادثة التقليدية، سيريانا تملك **حلقة تعلم مدمجة**: تنشئ مهارات جديدة من التجارب، تحسّنها أثناء الاستخدام، تتذكر عبر المحادثات، وتزداد ذكاءً مع الوقت.
-
-اعتبره **مهندسك الشخصي للذكاء الاصطناعي** — دائم الاستعداد، دائم التعلم، يعمل لأجلك.
+> **سيريانا أيجنت** — وكيل الذكاء الاصطناعي المحسّن ذاتياً مع حلقة تعلم مدمجة. ينشئ مهارات من التجارب، يحسّنها أثناء الاستخدام، يحفظ الذاكرة عبر الجلسات، ويبني نموذجاً متعمقاً لمن أنت مع الوقت. يعمل مع أي مزود ذكاء اصطناعي، على أي منصة، ويتوسع عبر البلجنز والمهارات. مفتوح المصدر. رخصة MIT.
 
 ---
 
-## 🧠 يدعم كل مفاتيح API — استخدم أي مزود تريد
+## 🧠 محايد تجاه المزوّد — استخدم أي نموذج تريد
 
-سيريانا **لا ترتبط بمزود معين**. أحضر مفتاح API الخاص بك من أي مزود واشتغل فوراً — لا إكراه، لا اشتراكات، لا رسوم خفية.
-
-### 🔑 المزوّدات المدعومة (الرئيسية + المحلية)
+سيريانا تعمل مع **كل مزوّدي الذكاء الاصطناعي الرئيسيين** — وغيرهم. أحضر مفتاح API الخاص بك وسيريانا تتولى الباقي. لا إكراه، لا اشتراكات، لا تكاليف خفية.
 
 | الفئة | المزوّدات |
 |-------|-----------|
-| ☁️ **سحابية** | OpenAI (GPT-4, GPT-4o), Anthropic (Claude 3.5/4), Google (Gemini 2.0+), OpenRouter (200+ نموذج), DeepSeek, Moonshot/Kimi, MiniMax, Z.AI/GLM, NVIDIA NIM, NovitaAI, Amazon Bedrock, Azure OpenAI, Google Vertex AI |
-| 🏠 **نماذج محلية** | Ollama (Llama, Mistral, Qwen, DeepSeek محلي), LM Studio, vLLM, Text Generation WebUI |
-| 🆓 **مجانية** | Google AI Studio, OpenRouter نماذج مجانية، نماذج محلية (بدون تكلفة) |
-| 🔧 **مخصص** | أي endpoint متوافق مع OpenAI — استضف بنفسك، شبكة خاصة، معزول |
+| **سحابية** | OpenAI (GPT-4, GPT-4o, o1, o3), Anthropic (Claude 3.5, Claude 4), Google (Gemini 2.0+), OpenRouter (200+), DeepSeek, Moonshot, MiniMax, Z.AI/GLM, NVIDIA NIM, Amazon Bedrock, Azure OpenAI, Google Vertex AI |
+| **محلية** | Ollama, LM Studio, vLLM, Text Generation WebUI — أي نموذج تشغّله محلياً |
+| **مجانية** | Google AI Studio، نماذج OpenRouter المجانية، نماذج محلية (بدون تكلفة) |
+| **مخصصة** | أي endpoint متوافق مع OpenAI — شبكة خاصة، معزول، حكومي |
 
-**لا يوجد ارتباط بمزوّد.** غيّر بين المزوّدات بأمر واحد: `syriana model`
-
----
-
-## ✨ ما الذي يميز سيريانا عن غيرها؟
-
-### 🔄 حلقة التعلم المدمجة (فريدة)
-معظم وكلاء الذكاء الاصطناعي **عديمو الحالة** — بمجرد انتهاء المحادثة، يُنسى كل شيء. سيريانا مختلفة:
-- **تنشئ مهارات** من تجاربها تلقائياً
-- **تحسّن المهارات** أثناء الاستخدام بناءً على ما يعمل
-- **تحفظ الذاكرة** عبر الجلسات — تتذكر من أنت
-- **تبحث في المحادثات السابقة** للسياق عند الحاجة
-- **تبني نموذجاً للمستخدم** لتفضيلاتك وأسلوبك مع الوقت
-
-### 🛠️ نظام المهارات (450+ مهارة)
-سيريانا تأتي مع **مكتبة غنية تضم أكثر من 450 مهارة مدمجة**:
-
-| فئة المهارات | أمثلة |
-|--------------|-------|
-| 💻 **تطوير البرمجيات** | مراجعة الكود، تصحيح الأخطاء، TDD، تصميم معماري، إعادة هيكلة، Git |
-| 🔒 **الأمن السيبراني** | اختبار الاختراق، OSINT، تحليل الثغرات، الطب الشرعي الرقمي |
-| 📊 **علم البيانات** | تحليل البيانات، تصور بيانات، Jupyter، أنابيب ML |
-| 📝 **الإنتاجية** | إدارة البريد الإلكتروني، تحرير المستندات، PDF، العروض التقديمية |
-| 🌐 **البحث والويب** | بحث ويب، يوتيوب، أبحاث أكاديمية (arXiv)، متابعة أخبار |
-| 🎨 **الإبداع** | توليد الصور، ASCII art، موسيقى، فيديو، مخططات معمارية |
-| 🏢 **المال والأعمال** | تحليل أسواق، نمذجة مالية، Excel، عروض تقديمية |
-| 🔗 **القنوات** | تلغرام، دسكورد، سلاك، واتساب، سيغنال، إيميل، SMS |
-
-### 🌍 يعمل في أي مكان
-| المنصة | الوضع |
-|--------|-------|
-| 💻 **التيرمنال (CLI)** | واجهة TUI كاملة مع تحرير متعدد الأسطر، أوامر مائلة، إخراج متدفق |
-| 📱 **تلغرام** | دردش من هاتفك وسيريانا تعمل على سحابة VM |
-| 💬 **دسكورد** | بوت متكامل مع أوامر مائلة |
-| 🏢 **سلاك** | تعاون جماعي |
-| 🖥️ **تطبيق سطح المكتب** | تطبيق أصلي لماك، ويندوز، لينكس |
-| 🌐 **لوحة تحكم ويب** | واجهة متصفح |
-
-### 🔌 بنية قابلة للتوسيع
-- **أكثر من 30 بلجن** — وسّع الوظائف دون لمس النواة
-- **أكثر من 450 مهارة** — مكتبة قدرات مدمجة
-- **دعم خوادم MCP** — اتصال مع أي أداة متوافقة مع MCP
-- **أدوات مخصصة** — اكتب أدواتك الخاصة بلغة Python
-
-### 🖥️ متعدد المنصات
-لينكس، ماك، ويندوز (أصلي)، أندرويد (Termux) — يعمل في أي مكان، حتى على VPS بـ 5$.
-
----
-
-## 🚀 التثبيت السريع
-
-### Linux / macOS
+غيّر بين المزوّدات بأمر واحد دون تعديل أي ملف:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.sh | bash
-```
-
-### Windows (PowerShell)
-
-```powershell
-powershell -ExecutionPolicy ByPass -c "iex (irm https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.ps1)"
-```
-
-### ⚠️ هام لمستخدمي ويندوز العرب — ConEmu
-
-> **مشكلة:** التيرمنال الافتراضي في ويندوز (Command Prompt / PowerShell) لا يدعم الكتابة باللغة العربية بشكل صحيح — الأحرف تظهر مقلوبة أو مشوهة.
->
-> **الحل:** استخدم **ConEmu** — تيرمنال مجاني ومتطور يدعم العربية بشكل كامل.
-
-1. حمّل ConEmu من الموقع الرسمي: [https://conemu.github.io](https://conemu.github.io)
-2. ثبّته وشغّله
-3. داخل ConEmu، شغّل أمر التثبيت الخاص بويندوز (أعلاه)
-
-### Android (Termux)
-
-```bash
-pkg update && pkg upgrade -y
-pkg install python git curl -y
-pip install syriana-agent --no-deps
-```
-
----
-
-## 🔧 بدء الاستخدام بعد التثبيت
-
-```bash
-# ضبط مفتاح API (من أي مزود)
-syriana config set OPENROUTER_API_KEY مفتاحك_هنا
-
-# أو استخدم OpenAI
-syriana config set OPENAI_API_KEY sk-mفتاحك_هنا
-
-# غيّر مزود النموذج في أي وقت
 syriana model
-
-# بدء المحادثة
-syriana chat
-
-# تشغيل gateway لـ تلغرام/دسكورد
-syriana gateway run
-
-# التحديث إلى آخر إصدار
-syriana update
 ```
+
+---
+
+## 🔄 حلقة التعلّم — ما يميز سيريانا
+
+معظم الوكلاء **قوالب عديمة الحالة** — تنتهي المحادثة، يُنسى كل شيء. سيريانا هي **الوكيل مفتوح المصدر الوحيد بحلقة تعلم مغلقة**:
+
+- **إنشاء مهارات ذاتي** — تنشئ مهارات جديدة من تجاربها تلقائياً دون أن تطلب
+- **تحسين ذاتي للمهارات** — تحسّن مهاراتها أثناء الاستخدام، تتعلم ما ينفع وما لا ينفع
+- **ذاكرة دائمة** — ذاكرة ينظمها الوكيل نفسه مع تذكيرات دورية للاحتفاظ بالمهم
+- **استرجاع عبر الجلسات** — بحث كامل النص في المحادثات السابقة مع تلخيص بالذكاء الاصطناعي
+- **نمذجة المستخدم** — تبني نموذجاً متعمقاً لتفضيلاتك وأسلوبك عبر الجلسات
+
+كلما استخدمتها أكثر، أصبحت أفضل. تتعلم مثل الإنسان — بالممارسة، والتذكر، والتحسين.
+
+---
+
+## 🛠️ مهارات مدمجة — أكثر من 450 قدرة
+
+سيريانا تأتي مع **مكتبة مهارات تضم أكثر من 450 قدرة** عبر كل المجالات:
+
+| المجال | المهارات |
+|--------|----------|
+| **💻 تطوير برمجيات** | مراجعة كود، تصحيح أخطاء، TDD، تصميم معماري، إعادة هيكلة، Git |
+| **🔒 أمن سيبراني** | اختبار اختراق، OSINT، بحث ثغرات، طب شرعي، تحليل استغلال |
+| **📊 علوم بيانات** | تحليل بيانات، تصور، Jupyter، أنابيب تعلم آلة |
+| **📝 إنتاجية** | بريد إلكتروني، مستندات، PDF، عروض تقديمية، جداول مواعيد |
+| **🌐 بحث وويب** | بحث واستخراج ويب، يوتيوب، أبحاث أكاديمية، متابعة أخبار |
+| **🎨 إبداع** | توليد صور، ASCII art، موسيقى، فيديو، إنفوغرافيك، مخططات |
+| **🏢 أعمال ومالية** | تحليل أسواق، نمذجة مالية DCF/LBO، Excel، تقارير مالية |
+| **🔗 تواصل** | تلغرام، دسكورد، سلاك، واتساب، سيغنال، إيميل، SMS |
+
+كل مهارة هي **قدرة قابلة لإعادة الاستخدام** يمكن لسيريانا استدعاؤها عند الحاجة — أو إنشاء مهارات جديدة تلقائياً.
+
+---
+
+## 🌍 تعيش حيث تسكن
+
+سيريانا ليست مرتبطة بجهازك المحمول. **تعمل في كل مكان** — وتتحدث معها من أي مكان:
+
+| الواجهة | التفاصيل |
+|---------|----------|
+| **💻 تيرمنال (CLI)** | واجهة TUI كاملة — تحرير متعدد الأسطر، أوامر مائلة مع إكمال تلقائي، إخراج متدفق |
+| **📱 تلغرام** | دردش من هاتفك وسيريانا تعمل على سحابة. رسائل صوتية تتحول لنص تلقائياً |
+| **💬 دسكورد** | بوت متكامل — أوامر مائلة، ثريدز، قنوات صوتية |
+| **🏢 سلاك** | تعاون جماعي مع ثريدينج |
+| **📧 إيميل / SMS / سيغنال / واتساب** | جميع القنوات من بوابة واحدة |
+| **🖥️ تطبيق سطح مكتب** | تطبيق أصلي — ماك، ويندوز، لينكس |
+| **🌐 لوحة تحكم ويب** | إدارة ودردشة من المتصفح |
+
+**أكثر من 20 منصة من بوابة واحدة** — عملية واحدة، إعدادات واحدة، كل القنوات.
+
+---
+
+## ⚡ يعمل في أي مكان (ليس فقط على جهازك)
+
+انشر على البنية التحتية التي تناسب احتياجاتك: محلي، Docker، SSH، سيرفرلس.
+
+شغّله على **VPS بـ 5$** أو **عنقود GPU** أو **بنية تحتية serverless** لا تكلف شيئاً عند الخمول.
 
 ---
 
@@ -317,13 +285,13 @@ syriana update
 
 **مجموعة التلغرام:** [https://t.me/syriana_ai](https://t.me/syriana_ai)
 
-انضم إلى مجتمع سيريانا! شاركنا أفكارك، اسأل، ساهم في تطوير المشروع. نرحب بالجميع — مطورين، مستخدمين، ومهتمين.
+انضم إلى مجتمع سيريانا — مطورين، مستخدمين، مهتمين. شاركنا أفكارك، اسأل، ساهم.
 
 ---
 
 ## 📄 الترخيص
 
-MIT — راجع ملف [LICENSE](LICENSE) للتفاصيل. مجاني للاستخدام والتعديل والنشر.
+MIT — راجع [LICENSE](LICENSE) للتفاصيل. مجاني للاستخدام والتعديل والنشر.
 
 ---
 
