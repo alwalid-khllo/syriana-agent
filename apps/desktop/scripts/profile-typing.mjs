@@ -10,7 +10,7 @@
 //
 // Usage:
 //   node apps/desktop/scripts/profile-typing.mjs
-//     [--port=9222] [--out=/tmp/hermes-typing]
+//     [--port=9222] [--out=/tmp/syriana-typing]
 //     [--chars=400]              # how many characters to type
 //     [--cps=30]                 # keystrokes per second
 //     [--text="..."]             # override generated text
@@ -29,7 +29,7 @@ const args = Object.fromEntries(
 )
 
 const PORT = Number(args.port ?? 9222)
-const OUT = String(args.out ?? `/tmp/hermes-typing-${Date.now()}`)
+const OUT = String(args.out ?? `/tmp/syriana-typing-${Date.now()}`)
 const CHARS = Number(args.chars ?? 400)
 const CPS = Number(args.cps ?? 30)
 const HEAP = args['no-heap'] ? false : true

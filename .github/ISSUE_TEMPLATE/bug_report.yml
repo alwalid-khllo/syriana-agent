@@ -119,9 +119,9 @@ body:
       placeholder: "3.11.9"
 
   - type: input
-    id: hermes-version
+    id: syriana-version
     attributes:
-      label: Hermes Version
+      label: Syriana Version
       description: Output of `syriana version`
       placeholder: "2.1.0"
 

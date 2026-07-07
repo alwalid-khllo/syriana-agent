@@ -12,7 +12,7 @@ const args = Object.fromEntries(
   })
 )
 const PORT = Number(args.port ?? 9222)
-const OUT = String(args.out ?? `/tmp/hermes-long-stream-${Date.now()}`)
+const OUT = String(args.out ?? `/tmp/syriana-long-stream-${Date.now()}`)
 const STREAM_SEC = Number(args.seconds ?? 25)
 
 async function pickRenderer() {

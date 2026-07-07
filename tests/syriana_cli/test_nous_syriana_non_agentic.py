@@ -31,7 +31,7 @@ from syriana_cli.model_switch import (
         "syriana-4-405b",
         "syriana_4_70b",
         "openrouter/syriana3:70b",
-        "openrouter/nousresearch/syriana-4-405b",
+        "openrouter/fixology/syriana-4-405b",
         "SyrianaAIResearch/Syriana3",
         "syriana-3.1",
     ],

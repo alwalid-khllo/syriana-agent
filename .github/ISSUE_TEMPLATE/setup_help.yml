@@ -1,5 +1,5 @@
 name: "🔧 Setup / Installation Help"
-description: Having trouble installing or configuring Hermes? Ask here.
+description: Having trouble installing or configuring Syriana? Ask here.
 title: "[Setup]: "
 labels: ["setup"]
 body:
@@ -68,9 +68,9 @@ body:
       placeholder: "3.11.9"
 
   - type: input
-    id: hermes-version
+    id: syriana-version
     attributes:
-      label: Hermes Version
+      label: Syriana Version
       description: Output of `syriana version` (if install got that far)
       placeholder: "2.1.0"
 
@@ -109,4 +109,4 @@ body:
       placeholder: |
         - Ran `syriana update`
         - Tried reinstalling with `pip install -e ".[all]"`
-        - Checked that OPENROUTER_API_KEY is set in ~/.hermes/.env
+        - Checked that OPENROUTER_API_KEY is set in ~/.syriana/.env

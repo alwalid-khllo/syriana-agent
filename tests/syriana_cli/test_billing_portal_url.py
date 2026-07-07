@@ -18,13 +18,13 @@ from syriana_cli.nous_billing import (
 
 @pytest.fixture
 def _preview(monkeypatch):
-    monkeypatch.setenv("SYRIANA_PORTAL_BASE_URL", "https://nas-pr-412.nousresearch.wtf")
+    monkeypatch.setenv("SYRIANA_PORTAL_BASE_URL", "https://nas-pr-412.fixology.wtf")
 
 
 def test_absolutize_resolves_relative(_preview):
     assert (
         _absolutize_portal_url("/billing?topup=open")
-        == "https://nas-pr-412.nousresearch.wtf/billing?topup=open"
+        == "https://nas-pr-412.fixology.wtf/billing?topup=open"
     )
 
 
@@ -49,5 +49,5 @@ def test_raise_for_error_attaches_absolute_portal_url(_preview):
         )
     assert (
         exc_info.value.portal_url
-        == "https://nas-pr-412.nousresearch.wtf/billing?topup=open"
+        == "https://nas-pr-412.fixology.wtf/billing?topup=open"
     )

@@ -168,8 +168,8 @@ async function main() {
     // wait for any agent activity to finish before next round so we're not piling up
     await new Promise(r => setTimeout(r, 4000))
   }
-  writeFileSync('/tmp/hermes-submit-latency.json', JSON.stringify(samples, null, 2))
-  console.log('\nwrote /tmp/hermes-submit-latency.json')
+  writeFileSync('/tmp/syriana-submit-latency.json', JSON.stringify(samples, null, 2))
+  console.log('\nwrote /tmp/syriana-submit-latency.json')
   cdp.close()
 }
 

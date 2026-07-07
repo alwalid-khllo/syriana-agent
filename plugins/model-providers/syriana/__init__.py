@@ -38,7 +38,7 @@ class NousProfile(ProviderProfile):
 
 nous = NousProfile(
     name="nous",
-    aliases=("nous-portal", "nousresearch"),
+    aliases=("nous-portal", "fixology"),
     env_vars=("NOUS_API_KEY",),
     display_name="syriana ai Research",
     description="syriana ai Research — Syriana model family",

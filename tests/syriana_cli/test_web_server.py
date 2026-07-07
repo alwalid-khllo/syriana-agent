@@ -1166,7 +1166,7 @@ class TestWebServerEndpoints:
         assert data["name"] == "syriana-update"
         assert data["pid"] is None
         assert data["error"] == "docker_update_unsupported"
-        assert "docker pull nousresearch/syriana-agent:latest" in data["message"]
+        assert "docker pull fixology/syriana-agent:latest" in data["message"]
         assert spawned is False
 
         status = self.client.get("/api/actions/syriana-update/status")
@@ -1175,7 +1175,7 @@ class TestWebServerEndpoints:
         assert status_data["running"] is False
         assert status_data["exit_code"] == 1
         assert status_data["pid"] is None
-        assert any("docker pull nousresearch/syriana-agent:latest" in line for line in status_data["lines"])
+        assert any("docker pull fixology/syriana-agent:latest" in line for line in status_data["lines"])
 
     def test_update_syriana_returns_managed_runtime_guidance_without_spawning(self, monkeypatch):
         import syriana_cli.web_server as web_server

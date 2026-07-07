@@ -237,7 +237,7 @@ rm "$HOME/.syriana/syriana-agent/.syriana-bootstrap-complete"
 rm -rf "$HOME/.syriana/syriana-agent/venv"
 
 # Reset a stuck macOS microphone prompt
-tccutil reset Microphone com.nousresearch.syriana
+tccutil reset Microphone com.fixology.syriana
 ```
 
 ### "Build desktop app" stuck on Electron download
