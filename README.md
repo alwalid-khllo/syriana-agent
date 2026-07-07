@@ -8,7 +8,7 @@
   <a href="https://github.com/alwalid-khllo/syriana-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
   <a href="https://t.me/syriana_ai"><img src="https://img.shields.io/badge/Telegram-Syriana_AI-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram"></a>
   <a href="#-arabic-عربي"><img src="https://img.shields.io/badge/Lang-العربية-red?style=for-the-badge" alt="Arabic"></a>
-  <a href="https://github.com/alwalid-khllo/syriana-agent/releases"><img src="https://img.shields.io/badge/Release-v0.18.0-FF6B35?style=for-the-badge" alt="Version 0.18.0"></a>
+  <a href="https://github.com/alwalid-khllo/syriana-agent/releases"><img src="https://img.shields.io/badge/Release-v1.0.0-FF6B35?style=for-the-badge" alt="Version 1.0.0"></a>
 </p>
 
 ---
