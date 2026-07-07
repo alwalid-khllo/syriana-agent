@@ -136,8 +136,8 @@ foreach ($tmpVar in @('TEMP', 'TMP')) {
 # Configuration
 # ============================================================================
 
-$RepoUrlSsh = "git@github.com:fixology/syriana-agent.git"
-$RepoUrlHttps = "https://github.com/fixology/syriana-agent.git"
+$RepoUrlSsh = "git@github.com:alwalid-khllo/syriana-agent.git"
+$RepoUrlHttps = "https://github.com/alwalid-khllo/syriana-agent.git"
 $PythonVersion = "3.11"
 # Minor versions the installer accepts when the requested $PythonVersion isn't
 # available, in preference order.  uv discovers both uv-managed and system
