@@ -24,7 +24,7 @@ By default every profile is seeded with the bundled skill catalog, and each `syr
 **At install time** (applies to the default `~/.syriana` profile):
 
 ```bash
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash -s -- --no-skills
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash -s -- --no-skills
 ```
 
 **At profile-create time** (named profiles):
@@ -591,7 +591,7 @@ syriana skills tap add myorg/skills-repo
 [skills.sh schema](https://skills.sh/schemas/skills.sh.schema.json). Its
 `groupings` (each with a `title` and a list of skill names) are read at index
 time and become the category labels shown in the
-[Skills Hub](https://syriana-agent.nousresearch.com/docs) page — instead of a
+[Skills Hub](https://syriana-agent.syriana.ai/docs) page — instead of a
 tag-derived guess. This is generic: any tap that ships the file gets real
 categorization, no Syriana-side changes required.
 

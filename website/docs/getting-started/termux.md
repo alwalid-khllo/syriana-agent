@@ -51,7 +51,7 @@ That does not stop Syriana from working well as a phone-native CLI agent — it 
 Syriana now ships a Termux-aware installer path:
 
 ```bash
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash
 ```
 
 On Termux, the installer automatically:

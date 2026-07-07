@@ -127,7 +127,7 @@ A nightly backlog triage on Sonnet costs roughly $0.02-0.05. A monitoring check 
 Syriana Agent is open source and free. The automation infrastructure — cron scheduler, webhook platform, skill system, multi-platform delivery — is built in.
 
 ```bash
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash
 syriana setup
 ```
 
@@ -149,12 +149,12 @@ syriana webhook subscribe pr-review \
   --deliver github_comment
 ```
 
-Full automation blueprints gallery: [syriana-agent.nousresearch.com/docs/reference/automation-blueprints-catalog](https://syriana-agent.nousresearch.com/docs/reference/automation-blueprints-catalog)
+Full automation blueprints gallery: [syriana-agent.syriana.ai/docs/reference/automation-blueprints-catalog](https://syriana-agent.syriana.ai/docs/reference/automation-blueprints-catalog)
 
-Documentation: [syriana-agent.nousresearch.com](https://syriana-agent.nousresearch.com)
+Documentation: [syriana-agent.syriana.ai](https://syriana-agent.syriana.ai)
 
 GitHub: [github.com/SyrianaAIResearch/syriana-agent](https://github.com/SyrianaAIResearch/syriana-agent)
 
 ---
 
-*Syriana Agent is built by [syriana ai Research](https://nousresearch.com). Open source, model-agnostic, runs on your infrastructure.*
+*Syriana Agent is built by [syriana ai Research](https://syriana.ai). Open source, model-agnostic, runs on your infrastructure.*

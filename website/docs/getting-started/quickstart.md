@@ -48,21 +48,21 @@ Pick the row that matches your goal:
 
 ## 1. Install Syriana Agent
 ### With the Syriana Desktop installer on macOS or Windows (recommended)
-To easily install the command-line and desktop applications, [download the Syriana Desktop installer](https://syriana-agent.nousresearch.com/) from our website and run it.
+To easily install the command-line and desktop applications, [download the Syriana Desktop installer](https://syriana-agent.syriana.ai/) from our website and run it.
 
 ### Without Syriana Desktop:
 For a command-line only install without Syriana Desktop, run:
 
 #### Linux / macOS / WSL2 / Android (Termux)
 ```bash
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash
 ```
 
 #### Windows (native)
 
 Run in powershell:
 ```powershell
-iex (irm https://syriana-agent.nousresearch.com/install.ps1) 
+iex (irm https://syriana-agent.syriana.ai/install.ps1) 
 ```
 
 :::tip Android / Termux

@@ -20,7 +20,7 @@ def test_resolve_managed_tool_gateway_derives_vendor_origin_from_shared_domain()
     with patch.dict(
         os.environ,
         {
-            "TOOL_GATEWAY_DOMAIN": "nousresearch.com",
+            "TOOL_GATEWAY_DOMAIN": "syriana.ai",
         },
         clear=False,
     ), patch.object(managed_tool_gateway, "managed_nous_tools_enabled", return_value=True):
@@ -30,7 +30,7 @@ def test_resolve_managed_tool_gateway_derives_vendor_origin_from_shared_domain()
         )
 
     assert result is not None
-    assert result.gateway_origin == "https://firecrawl-gateway.nousresearch.com"
+    assert result.gateway_origin == "https://firecrawl-gateway.syriana.ai"
     assert result.nous_user_token == "nous-token"
     assert result.managed_mode is True
 
@@ -56,7 +56,7 @@ def test_resolve_managed_tool_gateway_is_inactive_without_nous_token():
     with patch.dict(
         os.environ,
         {
-            "TOOL_GATEWAY_DOMAIN": "nousresearch.com",
+            "TOOL_GATEWAY_DOMAIN": "syriana.ai",
         },
         clear=False,
     ), patch.object(managed_tool_gateway, "managed_nous_tools_enabled", return_value=True):
@@ -69,7 +69,7 @@ def test_resolve_managed_tool_gateway_is_inactive_without_nous_token():
 
 
 def test_resolve_managed_tool_gateway_is_disabled_without_subscription():
-    with patch.dict(os.environ, {"TOOL_GATEWAY_DOMAIN": "nousresearch.com"}, clear=False), \
+    with patch.dict(os.environ, {"TOOL_GATEWAY_DOMAIN": "syriana.ai"}, clear=False), \
          patch.object(managed_tool_gateway, "managed_nous_tools_enabled", return_value=False):
         result = resolve_managed_tool_gateway(
             "firecrawl",
@@ -126,7 +126,7 @@ def test_is_managed_tool_gateway_ready_skips_refresh_for_expired_cached_token(tm
 
     with patch.dict(
         os.environ,
-        {"TOOL_GATEWAY_DOMAIN": "nousresearch.com"},
+        {"TOOL_GATEWAY_DOMAIN": "syriana.ai"},
         clear=False,
     ), patch.object(managed_tool_gateway, "managed_nous_tools_enabled", return_value=True):
         assert is_managed_tool_gateway_ready("modal") is True

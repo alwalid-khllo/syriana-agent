@@ -589,7 +589,7 @@ def parse_credits_headers(
 # A fixture drives THREE surfaces uniformly, so the whole credits UX is testable
 # offline: (1) the per-turn capture/notice path (_capture_credits), (2) the
 # cold-start seed at session open (conversation_loop → depletion/warn90 hydrate
-# immediately), and (3) the /usage view (nous_credits_lines renders the fixture).
+# immediately), and (3) the /usage view (syriana_credits_lines renders the fixture).
 # `clear` / `none` / unset → real behaviour. Delete with the rest of the
 # SYRIANA_DEV_CREDITS scaffolding.
 _DEV_FIXTURES: dict[str, dict] = {
@@ -679,7 +679,7 @@ def dev_fixture_credits_state() -> Optional[CreditsState]:
 
 
 def _credits_state_from_account(info) -> Optional[CreditsState]:
-    """Map a NousPortalAccountInfo into a header-shaped CreditsState for the seed.
+    """Map a SyrianaPortalAccountInfo into a header-shaped CreditsState for the seed.
 
     Float account dollars → micros (plus a DISPLAY *_usd string — allowed, since
     we're formatting account floats, NOT parsing a server-provided *_usd). Returns

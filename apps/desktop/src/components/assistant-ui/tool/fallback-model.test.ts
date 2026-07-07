@@ -82,28 +82,28 @@ describe('buildToolView browser_navigate title', () => {
     const view = buildToolView(
       part({
         toolName: 'browser_navigate',
-        args: { url: 'https://syriana-agent.nousresearch.com/docs' },
+        args: { url: 'https://syriana-agent.syriana.ai/docs' },
         result: { success: false, error: 'Command timed out after 60 seconds' }
       }),
       ''
     )
 
     expect(view.status).toBe('error')
-    expect(view.title).toBe('Failed to open syriana-agent.nousresearch.com')
+    expect(view.title).toBe('Failed to open syriana-agent.syriana.ai')
   })
 
   it('shows opened title on success', () => {
     const view = buildToolView(
       part({
         toolName: 'browser_navigate',
-        args: { url: 'https://syriana-agent.nousresearch.com/docs' },
-        result: { success: true, url: 'https://syriana-agent.nousresearch.com/docs', title: 'Docs' }
+        args: { url: 'https://syriana-agent.syriana.ai/docs' },
+        result: { success: true, url: 'https://syriana-agent.syriana.ai/docs', title: 'Docs' }
       }),
       ''
     )
 
     expect(view.status).toBe('success')
-    expect(view.title).toBe('Opened syriana-agent.nousresearch.com')
+    expect(view.title).toBe('Opened syriana-agent.syriana.ai')
   })
 })
 

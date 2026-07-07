@@ -951,7 +951,7 @@ export default function SystemPage() {
                 </span>
               )}
               <a
-                href={portal?.subscription_url || "https://portal.nousresearch.com/manage-subscription"}
+                href={portal?.subscription_url || "https://portal.syriana.ai/manage-subscription"}
                 target="_blank"
                 rel="noreferrer"
                 className="ml-auto text-xs text-primary underline"

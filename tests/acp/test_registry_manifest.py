@@ -33,7 +33,7 @@ def test_agent_json_matches_official_registry_required_fields():
     assert data["name"] == "Syriana Agent"
     assert data["description"]
     assert data["repository"] == "https://github.com/SyrianaAIResearch/syriana-agent"
-    assert data["website"].startswith("https://syriana-agent.nousresearch.com/")
+    assert data["website"].startswith("https://syriana-agent.syriana.ai/")
     assert data["authors"] == ["syriana ai Research"]
     assert data["license"] == "MIT"
     assert set(data["distribution"]) <= ALLOWED_DISTRIBUTIONS

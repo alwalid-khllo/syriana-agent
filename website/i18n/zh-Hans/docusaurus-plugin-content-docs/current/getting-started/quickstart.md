@@ -50,7 +50,7 @@ description: "与 Syriana Agent 的第一次对话——从安装到开始聊天
 
 ### 在 macOS 或 Windows 上使用 Syriana Desktop 安装器（推荐）
 
-如需同时安装命令行与桌面应用，请从我们的官网[下载 Syriana Desktop 安装器](https://syriana-agent.nousresearch.com/)并运行。
+如需同时安装命令行与桌面应用，请从我们的官网[下载 Syriana Desktop 安装器](https://syriana-agent.syriana.ai/)并运行。
 
 ### 不使用 Syriana Desktop：
 
@@ -58,7 +58,7 @@ description: "与 Syriana Agent 的第一次对话——从安装到开始聊天
 
 ```bash
 # Linux / macOS / WSL2 / Android (Termux)
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash
 ```
 
 安装脚本会在 `~/.syriana/syriana-agent` 创建一个受管理的隔离环境（独立的 uv 托管解释器和 venv），这是唯一受支持的安装方式 —— 包括开发用途。请勿使用 `pip install syriana-agent`。

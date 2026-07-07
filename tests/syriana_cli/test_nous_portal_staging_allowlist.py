@@ -4,7 +4,7 @@ _ALLOWED_NOUS_INFERENCE_HOSTS treatment.
 
 Real incident (2026-07): a hosted agent provisioned by nous-account-service
 on the `staging` Vercel environment is stamped with
-``SYRIANA_PORTAL_BASE_URL=https://portal.staging-nousresearch.com`` in its
+``SYRIANA_PORTAL_BASE_URL=https://portal.staging-syriana.ai`` in its
 container env (the documented dev/staging override), while its bootstrap
 ``auth.json`` ALSO persists ``portal_base_url`` to the same staging host.
 
@@ -46,20 +46,20 @@ class TestPortalEnvOverrideHelper:
 
     def test_syriana_portal_base_url_wins(self, monkeypatch):
         monkeypatch.setenv(
-            "SYRIANA_PORTAL_BASE_URL", "https://portal.staging-nousresearch.com/"
+            "SYRIANA_PORTAL_BASE_URL", "https://portal.staging-syriana.ai/"
         )
         monkeypatch.delenv("NOUS_PORTAL_BASE_URL", raising=False)
         assert (
-            _nous_portal_env_override() == "https://portal.staging-nousresearch.com"
+            _nous_portal_env_override() == "https://portal.staging-syriana.ai"
         )
 
     def test_nous_portal_base_url_used_as_fallback(self, monkeypatch):
         monkeypatch.delenv("SYRIANA_PORTAL_BASE_URL", raising=False)
         monkeypatch.setenv(
-            "NOUS_PORTAL_BASE_URL", "https://portal.staging-nousresearch.com"
+            "NOUS_PORTAL_BASE_URL", "https://portal.staging-syriana.ai"
         )
         assert (
-            _nous_portal_env_override() == "https://portal.staging-nousresearch.com"
+            _nous_portal_env_override() == "https://portal.staging-syriana.ai"
         )
 
     def test_env_override_not_gated_by_allowlist(self, monkeypatch):
@@ -67,11 +67,11 @@ class TestPortalEnvOverrideHelper:
         _NOUS_PORTAL_ALLOWED_HOSTS, and the helper must return it anyway —
         gating happens only for network-provenance values."""
         monkeypatch.setenv(
-            "SYRIANA_PORTAL_BASE_URL", "https://portal.staging-nousresearch.com"
+            "SYRIANA_PORTAL_BASE_URL", "https://portal.staging-syriana.ai"
         )
-        assert "portal.staging-nousresearch.com" not in _NOUS_PORTAL_ALLOWED_HOSTS
+        assert "portal.staging-syriana.ai" not in _NOUS_PORTAL_ALLOWED_HOSTS
         assert (
-            _nous_portal_env_override() == "https://portal.staging-nousresearch.com"
+            _nous_portal_env_override() == "https://portal.staging-syriana.ai"
         )
 
 
@@ -134,7 +134,7 @@ class TestResolveAccessTokenEnvOverrideWins:
         allowlist-rejection warning must never fire."""
         import syriana_cli.auth as auth
 
-        staging_portal = "https://portal.staging-nousresearch.com"
+        staging_portal = "https://portal.staging-syriana.ai"
         monkeypatch.setenv("SYRIANA_HOME", str(tmp_path))
         monkeypatch.setenv("SYRIANA_PORTAL_BASE_URL", staging_portal)
         self._write_auth_file(tmp_path, stored_portal_url=staging_portal)
@@ -152,7 +152,7 @@ class TestResolveAccessTokenEnvOverrideWins:
         win for the actual refresh call."""
         import syriana_cli.auth as auth
 
-        staging_portal = "https://portal.staging-nousresearch.com"
+        staging_portal = "https://portal.staging-syriana.ai"
         monkeypatch.setenv("SYRIANA_HOME", str(tmp_path))
         monkeypatch.setenv("SYRIANA_PORTAL_BASE_URL", staging_portal)
         self._write_auth_file(tmp_path, stored_portal_url=DEFAULT_NOUS_PORTAL_URL)
@@ -169,7 +169,7 @@ class TestResolveAccessTokenEnvOverrideWins:
         allowlist's actual job — preserved, not regressed, by this fix)."""
         import syriana_cli.auth as auth
 
-        staging_portal = "https://portal.staging-nousresearch.com"
+        staging_portal = "https://portal.staging-syriana.ai"
         monkeypatch.setenv("SYRIANA_HOME", str(tmp_path))
         monkeypatch.delenv("SYRIANA_PORTAL_BASE_URL", raising=False)
         monkeypatch.delenv("NOUS_PORTAL_BASE_URL", raising=False)

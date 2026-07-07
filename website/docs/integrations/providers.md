@@ -61,7 +61,7 @@ In the `model:` config section, you can use either `default:` or `model:` as the
 
 ### Nous Portal
 
-[Nous Portal](https://portal.nousresearch.com) is syriana ai Research's unified subscription gateway and **the recommended way to run Syriana Agent**. One OAuth login covers 300+ frontier agentic models (Claude, GPT, Gemini, DeepSeek, Qwen, Kimi, GLM, MiniMax, Grok, ...) plus the [Tool Gateway](/user-guide/features/tool-gateway) (web search, image generation, TTS, browser automation) plus [Nous Chat](https://chat.nousresearch.com) — billed against your Nous subscription instead of separate per-provider accounts.
+[Nous Portal](https://portal.syriana.ai) is syriana ai Research's unified subscription gateway and **the recommended way to run Syriana Agent**. One OAuth login covers 300+ frontier agentic models (Claude, GPT, Gemini, DeepSeek, Qwen, Kimi, GLM, MiniMax, Grok, ...) plus the [Tool Gateway](/user-guide/features/tool-gateway) (web search, image generation, TTS, browser automation) plus [Nous Chat](https://chat.syriana.ai) — billed against your Nous subscription instead of separate per-provider accounts.
 
 ```bash
 syriana setup --portal     # fresh install — OAuth + provider + gateway in one command
@@ -69,7 +69,7 @@ syriana model              # existing install — pick "Nous Portal" from the li
 syriana portal info        # inspect login + routing at any time
 ```
 
-Don't have a subscription yet? Get one at [portal.nousresearch.com/manage-subscription](https://portal.nousresearch.com/manage-subscription).
+Don't have a subscription yet? Get one at [portal.syriana.ai/manage-subscription](https://portal.syriana.ai/manage-subscription).
 
 **For full details:** see the dedicated [Nous Portal integration page](/integrations/nous-portal) (what's in the subscription, model catalog, troubleshooting) and the step-by-step [Run Syriana Agent with Nous Portal guide](/guides/run-syriana-with-nous-portal).
 

@@ -45,9 +45,9 @@ def _fake_nous_device_data():
     return {
         "device_code": "device-code",
         "user_code": "NOUS-1234",
-        "verification_uri": "https://portal.nousresearch.com/device",
+        "verification_uri": "https://portal.syriana.ai/device",
         "verification_uri_complete": (
-            "https://portal.nousresearch.com/device?user_code=NOUS-1234"
+            "https://portal.syriana.ai/device?user_code=NOUS-1234"
         ),
         "expires_in": 600,
         "interval": 5,
@@ -55,7 +55,7 @@ def _fake_nous_device_data():
 
 
 def _invoke_scope_refusal():
-    request = httpx.Request("POST", "https://portal.nousresearch.com/oauth/device/code")
+    request = httpx.Request("POST", "https://portal.syriana.ai/oauth/device/code")
     response = httpx.Response(
         400,
         json={
@@ -352,7 +352,7 @@ def test_nous_dashboard_poller_preserves_effective_scope_when_token_omits_scope(
         "created_at": time.time(),
         "status": "pending",
         "error_message": None,
-        "portal_base_url": "https://portal.nousresearch.com",
+        "portal_base_url": "https://portal.syriana.ai",
         "client_id": "syriana-cli",
         "device_code": "device-code",
         "interval": 5,

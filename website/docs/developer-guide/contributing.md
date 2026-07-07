@@ -49,7 +49,7 @@ development environment on the same layout the CLI, updater, lazy dependency
 installer, gateway, and docs assume.
 
 ```bash
-curl -fsSL https://syriana-agent.nousresearch.com/install.sh | bash
+curl -fsSL https://syriana-agent.syriana.ai/install.sh | bash
 cd "${SYRIANA_HOME:-$HOME/.syriana}/syriana-agent"
 
 # Add dev/test extras on top of the standard install.

@@ -22,7 +22,7 @@ const buildView = (overrides: Partial<CreditsViewResponse> = {}): CreditsViewRes
   depleted: false,
   identity_line: 'Signed in as ada@example.com',
   logged_in: true,
-  topup_url: 'https://portal.nousresearch.com/billing/topup',
+  topup_url: 'https://portal.syriana.ai/billing/topup',
   ...overrides
 })
 

@@ -180,7 +180,7 @@ class TestFallbackChain:
     releases (opus 4.8, etc.) never reach the picker.
     """
 
-    PRIMARY = "https://syriana-agent.nousresearch.com/docs/api/model-catalog.json"
+    PRIMARY = "https://syriana-agent.syriana.ai/docs/api/model-catalog.json"
     FALLBACK = (
         "https://raw.githubusercontent.com/SyrianaAIResearch/syriana-agent"
         "/main/website/static/api/model-catalog.json"

@@ -32,11 +32,11 @@ from syriana_cli.auth import (
 
 class TestValidatorRules:
     def test_allowlisted_https_host_returned(self):
-        url = "https://inference-api.nousresearch.com/v1"
+        url = "https://inference-api.syriana.ai/v1"
         assert _validate_nous_inference_url_from_network(url) == url
 
     def test_trailing_slash_stripped(self):
-        url = "https://inference-api.nousresearch.com/v1/"
+        url = "https://inference-api.syriana.ai/v1/"
         assert _validate_nous_inference_url_from_network(url) == url.rstrip("/")
 
     def test_attacker_host_rejected(self, caplog):
@@ -48,14 +48,14 @@ class TestValidatorRules:
         assert any("attacker.com" in rec.message for rec in caplog.records)
 
     def test_subdomain_of_allowlist_host_rejected(self):
-        """*.nousresearch.com is NOT in the allowlist — exact hostname only.
+        """*.syriana.ai is NOT in the allowlist — exact hostname only.
 
-        A subdomain takeover or DNS hijack of *.nousresearch.com would
+        A subdomain takeover or DNS hijack of *.syriana.ai would
         otherwise pass — keep the gate tight.
         """
         assert (
             _validate_nous_inference_url_from_network(
-                "https://evil.inference-api.nousresearch.com/v1"
+                "https://evil.inference-api.syriana.ai/v1"
             )
             is None
         )
@@ -64,7 +64,7 @@ class TestValidatorRules:
         with caplog.at_level(logging.WARNING, logger="syriana_cli.auth"):
             assert (
                 _validate_nous_inference_url_from_network(
-                    "http://inference-api.nousresearch.com/v1"
+                    "http://inference-api.syriana.ai/v1"
                 )
                 is None
             )
@@ -107,7 +107,7 @@ class TestValidatorRules:
         """Sanity check: DEFAULT_NOUS_INFERENCE_URL must itself validate.
 
         If anyone retargets the default away from
-        ``inference-api.nousresearch.com``, they MUST update the allowlist
+        ``inference-api.syriana.ai``, they MUST update the allowlist
         in the same change — otherwise the allowlist would reject the
         Portal's own legitimate default and break every install.
         """
@@ -215,7 +215,7 @@ class TestEnvOverrideNotGated:
 
 class TestHealsPoisonedStoredValue:
     """A stored inference_base_url that is NOT in the allowlist (e.g. a
-    stale ``stg-inference-api.nousresearch.com`` persisted before the
+    stale ``stg-inference-api.syriana.ai`` persisted before the
     allowlist existed) must be HEALED back to the production default on
     the next refresh — not silently retained.
 
@@ -230,7 +230,7 @@ class TestHealsPoisonedStoredValue:
     def test_refresh_resets_rejected_url_to_default(self, monkeypatch):
         import syriana_cli.auth as auth
 
-        poisoned = "https://stg-inference-api.nousresearch.com/v1"
+        poisoned = "https://stg-inference-api.syriana.ai/v1"
         state = {
             "access_token": "tok",
             "refresh_token": "rtok",
@@ -267,7 +267,7 @@ class TestHealsPoisonedStoredValue:
         """A legitimate allowlisted URL from the Portal is preserved."""
         import syriana_cli.auth as auth
 
-        good = "https://inference-api.nousresearch.com/v1"
+        good = "https://inference-api.syriana.ai/v1"
         state = {
             "access_token": "tok",
             "refresh_token": "rtok",
@@ -308,7 +308,7 @@ class TestEnvOverrideWins:
     override is a runtime overlay, never written to auth.json).
     """
 
-    STAGING = "https://stg-inference-api.nousresearch.com/v1"
+    STAGING = "https://stg-inference-api.syriana.ai/v1"
 
     def _patch_no_refresh(self, monkeypatch, auth, state):
         import contextlib

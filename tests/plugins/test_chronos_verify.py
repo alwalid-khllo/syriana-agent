@@ -36,7 +36,7 @@ def _mint(priv, claims):
 
 
 AUD = "agent:inst-123"
-ISS = "https://portal.nousresearch.com"
+ISS = "https://portal.syriana.ai"
 
 
 def _base_claims(**over):
@@ -162,7 +162,7 @@ def test_jwks_url_path_resolves_key(rsa_keys, monkeypatch):
 
     class FakeJWKClient:
         def __init__(self, url):
-            assert url == "https://portal.nousresearch.com/.well-known/jwks.json"
+            assert url == "https://portal.syriana.ai/.well-known/jwks.json"
 
         def get_signing_key_from_jwt(self, tok):
             return FakeKey()
@@ -170,7 +170,7 @@ def test_jwks_url_path_resolves_key(rsa_keys, monkeypatch):
     monkeypatch.setattr("jwt.PyJWKClient", FakeJWKClient)
     claims = verify_nas_fire_token(
         token=token, expected_audience=AUD,
-        jwks_or_key="https://portal.nousresearch.com/.well-known/jwks.json",
+        jwks_or_key="https://portal.syriana.ai/.well-known/jwks.json",
         issuer=ISS,
     )
     assert claims is not None and claims["purpose"] == "cron_fire"

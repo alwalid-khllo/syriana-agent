@@ -2,7 +2,7 @@
 name = "syriana-bootstrap"
 version = "0.0.1"
 description = "Syriana Setup — signed installer that drives scripts/install.ps1"
-authors = ["syriana ai Research <info@nousresearch.com>"]
+authors = ["syriana ai Research <info@syriana.ai>"]
 edition = "2021"
 rust-version = "1.77"
 

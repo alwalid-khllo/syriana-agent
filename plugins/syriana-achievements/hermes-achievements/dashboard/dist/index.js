@@ -257,7 +257,7 @@
     ctx.fillStyle = "#8b95a8";
     ctx.font = "600 20px ui-monospace, 'SF Mono', Menlo, monospace";
     ctx.textBaseline = "bottom";
-    ctx.fillText("SYRIANA AGENT  ·  syriana-agent.nousresearch.com", 70, H - 40);
+    ctx.fillText("SYRIANA AGENT  ·  syriana-agent.syriana.ai", 70, H - 40);
 
     // "UNLOCKED" stamp upper-right
     ctx.textBaseline = "top";
@@ -339,7 +339,7 @@
         tier_part: tierPart,
         name: achievement.name,
       });
-      return tmpl + "\n\n@SyrianaAIResearch · https://syriana-agent.nousresearch.com";
+      return tmpl + "\n\n@SyrianaAIResearch · https://syriana-agent.syriana.ai";
     }
 
     function shareOnX() {

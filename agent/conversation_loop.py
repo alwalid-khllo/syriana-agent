@@ -1100,7 +1100,7 @@ def run_conversation(
             # deepens the rate limit hole.
             if agent.provider == "nous":
                 try:
-                    from agent.nous_rate_guard import (
+                    from agent.rate_guard import (
                         nous_rate_limit_remaining,
                         format_remaining as _fmt_nous_remaining,
                     )
@@ -2250,7 +2250,7 @@ def run_conversation(
                 # resume hitting Nous.
                 if agent.provider == "nous":
                     try:
-                        from agent.nous_rate_guard import clear_nous_rate_limit
+                        from agent.rate_guard import clear_nous_rate_limit
                         clear_nous_rate_limit()
                     except Exception:
                         pass
@@ -3245,7 +3245,7 @@ def run_conversation(
                 ):
                     _genuine_nous_rate_limit = False
                     try:
-                        from agent.nous_rate_guard import (
+                        from agent.rate_guard import (
                             is_genuine_nous_rate_limit,
                             record_nous_rate_limit,
                         )
