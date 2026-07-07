@@ -5,7 +5,7 @@
 # Uses uv for fast Python provisioning and package management.
 #
 # Usage:
-#   iex (irm https://syriana-agent.fixology.dev/install.ps1)
+#   iex (irm https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.ps1)
 #
 # Or download and run with options:
 #   .\install.ps1 -NoVenv -SkipSetup
@@ -23,8 +23,8 @@ param(
     # exact ref.  Precedence: Commit > Tag > Branch.
     [string]$Commit = "",
     [string]$Tag = "",
-    [string]$SyrianaHome = $(if ($env:SYRIANA_HOME) { $env:SYRIANA_HOME } else { "$env:LOCALAPPDATA\hermes" }),
-    [string]$InstallDir = $(if ($env:SYRIANA_HOME) { "$env:SYRIANA_HOME\hermes-agent" } else { "$env:LOCALAPPDATA\syriana\hermes-agent" }),
+    [string]$SyrianaHome = $(if ($env:SYRIANA_HOME) { $env:SYRIANA_HOME } else { "$env:LOCALAPPDATA\syriana" }),
+    [string]$InstallDir = $(if ($env:SYRIANA_HOME) { "$env:SYRIANA_HOME\syriana-agent" } else { "$env:LOCALAPPDATA\syriana\syriana-agent" }),
 
     # --- Stage protocol (additive; default invocation behaves as before) ----
     # See the "Stage protocol" section near the bottom of the file for the
@@ -443,9 +443,9 @@ function Get-PowerShellHostExe {
 }
 
 function Install-Uv {
-    # Hermes owns its own uv at $SyrianaHome\bin\uv.exe.  Always install there —
+    # Syriana owns its own uv at $SyrianaHome\bin\uv.exe.  Always install there —
     # no PATH probing, no conda guards, no multi-location resolution chains.
-    # The runtime update path (hermes_cli/managed_uv.py) looks in the same
+    # The runtime update path (syriana_cli/managed_uv.py) looks in the same
     # place, so install.ps1 and `syriana update` stay in sync.
     $managedUv = Join-Path $SyrianaHome "bin\uv.exe"
 
@@ -689,7 +689,7 @@ function Install-Git {
     <#
     .SYNOPSIS
     Ensure Git (and Git Bash) are installed.  Git for Windows bundles bash.exe
-    which Hermes uses to run shell commands.
+    which Syriana uses to run shell commands.
 
     Priority order (deliberately simple -- no winget, no registry, no system
     package manager):
@@ -714,7 +714,7 @@ function Install-Git {
     and re-running this installer fully recovers.
 
     After install we locate ``bash.exe`` and persist the path in
-    ``SYRIANA_GIT_BASH_PATH`` (User scope) so Hermes can find it in a fresh
+    ``SYRIANA_GIT_BASH_PATH`` (User scope) so Syriana can find it in a fresh
     shell without a second PATH refresh.
     #>
     Write-Info "Checking Git..."
@@ -849,7 +849,7 @@ function Set-GitBashEnvVar {
     <#
     .SYNOPSIS
     Locate ``bash.exe`` from an already-installed Git and persist the path in
-    ``SYRIANA_GIT_BASH_PATH`` (User env scope) so Hermes can find it even before
+    ``SYRIANA_GIT_BASH_PATH`` (User env scope) so Syriana can find it even before
     PATH propagation completes in a newly-spawned shell.
     #>
     $candidates = @()
@@ -1332,7 +1332,7 @@ function Install-Repository {
                     # -- the GUI "git checkout main failed (exit 1)" install
                     # failure. Clear the conflict markers with `git reset` first:
                     # working-tree changes are kept (and stashed just below); only
-                    # the index conflict state is dropped. Mirrors the `hermes
+                    # the index conflict state is dropped. Mirrors the `syriana
                     # update` path (#4735).
                     $unmergedOut = git -c windows.appendAtomically=false ls-files --unmerged 2>$null
                     if (-not [string]::IsNullOrWhiteSpace(($unmergedOut -join "`n"))) {
@@ -1491,17 +1491,17 @@ function Install-Repository {
                 # for.  GitHub supports archive URLs for commits, tags, and
                 # branches; we honour Commit > Tag > Branch.
                 if ($Commit) {
-                    $zipUrl = "https://github.com/fixology/syriana-agent/archive/$Commit.zip"
+                    $zipUrl = "https://github.com/alwalid-khllo/syriana-agent/archive/$Commit.zip"
                     $zipLabel = $Commit
                 } elseif ($Tag) {
-                    $zipUrl = "https://github.com/fixology/syriana-agent/archive/refs/tags/$Tag.zip"
+                    $zipUrl = "https://github.com/alwalid-khllo/syriana-agent/archive/refs/tags/$Tag.zip"
                     $zipLabel = $Tag
                 } else {
-                    $zipUrl = "https://github.com/fixology/syriana-agent/archive/refs/heads/$Branch.zip"
+                    $zipUrl = "https://github.com/alwalid-khllo/syriana-agent/archive/refs/heads/$Branch.zip"
                     $zipLabel = $Branch
                 }
-                $zipPath = "$env:TEMP\hermes-agent-$zipLabel.zip"
-                $extractPath = "$env:TEMP\hermes-agent-extract"
+                $zipPath = "$env:TEMP\syriana-agent-$zipLabel.zip"
+                $extractPath = "$env:TEMP\syriana-agent-extract"
 
                 Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -UseBasicParsing
                 if (Test-Path $extractPath) { Remove-Item -Recurse -Force $extractPath }
@@ -1630,7 +1630,7 @@ function Install-Venv {
             # on failure — but only for tasks that were enabled to begin with.
             # Best-effort: a missing task just errors quietly.
             try {
-                schtasks /Query /FO CSV 2>$null | ConvertFrom-Csv | Where-Object { $_.TaskName -like '*Hermes_Gateway*' } | ForEach-Object {
+                schtasks /Query /FO CSV 2>$null | ConvertFrom-Csv | Where-Object { $_.TaskName -like '*Syriana_Gateway*' } | ForEach-Object {
                     $tn = $_.TaskName
                     if ($_.Status -eq 'Disabled') {
                         Write-Info "  gateway autostart task $tn is already disabled; leaving it that way"
@@ -1644,19 +1644,19 @@ function Install-Venv {
             } catch {
                 Write-Warn "Could not enumerate gateway scheduled tasks: $($_.Exception.Message)"
             }
-            # The launcher CLI (hermes.exe) plus its child tree.
-            & taskkill /F /T /IM hermes.exe /FI "PID ne $myPid" 2>$null | Out-Null
-            # taskkill /IM hermes.exe is NOT enough: the gateway/agent that a
+            # The launcher CLI (syriana.exe) plus its child tree.
+            & taskkill /F /T /IM syriana.exe /FI "PID ne $myPid" 2>$null | Out-Null
+            # taskkill /IM syriana.exe is NOT enough: the gateway/agent that a
             # scheduled task or watchdog autostarts runs as
-            # `pythonw.exe -m hermes_cli.main gateway run` straight out of
-            # venv\Scripts\, so its image name is python/pythonw, not hermes.exe.
+            # `pythonw.exe -m syriana_cli.main gateway run` straight out of
+            # venv\Scripts\, so its image name is python/pythonw, not syriana.exe.
             # That process holds the venv's .pyd files open and re-triggers the
             # access-denied failure. Stop anything whose executable lives under
             # this venv, matched by path prefix so the image name does not matter
             # and a global/system python outside the venv is never touched.
             #
             # The gateway autostart task registers with /RL LIMITED as the current
-            # user (see hermes_cli/gateway_windows.py), so the installer always
+            # user (see syriana_cli/gateway_windows.py), so the installer always
             # runs at equal-or-higher integrity and can read its executable path.
             # Get-CimInstance is used over Get-Process because it returns a null
             # ExecutablePath for a process it cannot inspect (a different session)
@@ -1818,7 +1818,7 @@ function Install-Dependencies {
         # UV_PROJECT_ENVIRONMENT pins the sync target to our venv\.
         # Without it, modern uv (>=0.5) ignores VIRTUAL_ENV for `sync`
         # and creates a sibling .venv\ inside the repo -- leaving venv\
-        # empty and producing the broken state where `hermes.exe` exists
+        # empty and producing the broken state where `syriana.exe` exists
         # in the wrong directory and imports fail with ModuleNotFoundError.
         # (Mirrors the same flag in scripts/install.sh::install_deps.)
         $env:UV_PROJECT_ENVIRONMENT = "$InstallDir\venv"
@@ -1870,7 +1870,7 @@ try:
     specs = data['project']['optional-dependencies']['all']
     out = []
     for s in specs:
-        m = re.search(r'hermes-agent\[([\w-]+)\]', s)
+        m = re.search(r'syriana-agent\[([\w-]+)\]', s)
         if m: out.append(m.group(1))
     print(','.join(out))
 except Exception:
@@ -1908,16 +1908,16 @@ except Exception:
         }
     }
     if (-not $installed) {
-        throw "Failed to install hermes-agent package even with no extras. Inspect the uv pip install output above."
+        throw "Failed to install syriana-agent package even with no extras. Inspect the uv pip install output above."
     }
 
     # Baseline-import gate. Even if a tier reported success above, the
     # actual deps may have landed somewhere other than $InstallDir\venv\
     # (e.g. uv 0.5+ syncing into a sibling .venv\ when UV_PROJECT_ENVIRONMENT
-    # isn't set, leaving venv\ empty and hermes.exe broken with
+    # isn't set, leaving venv\ empty and syriana.exe broken with
     # `ModuleNotFoundError: No module named 'dotenv'` on first run).
     # We probe via the venv's own python so a misdirected sync is caught
-    # here, not 30 seconds later when the user runs `hermes`.
+    # here, not 30 seconds later when the user runs `syriana`.
     if (-not $NoVenv) {
         $venvPython = "$InstallDir\venv\Scripts\python.exe"
         if (-not (Test-Path $venvPython)) {
@@ -1947,10 +1947,10 @@ except Exception:
     }
 
     if (-not $NoVenv) {
-        # uv on Windows can register hermes.exe in dist-info/RECORD but fail to
+        # uv on Windows can register syriana.exe in dist-info/RECORD but fail to
         # materialise the .exe (file lock during self-update, distlib edge case).
         # Catch it here so a fresh install/update does not finish with a broken
-        # `hermes` command while hermes-agent.exe / hermes-acp.exe exist
+        # `syriana` command while syriana-agent.exe / syriana-acp.exe exist
         $scriptsDir = Join-Path $InstallDir "venv\Scripts"
         $pythonExe = Join-Path $scriptsDir "python.exe"
         if ((Test-Path $scriptsDir) -and (Test-Path $pythonExe)) {
@@ -1979,7 +1979,7 @@ print(','.join(scripts))
                     }
                     if ($stillMissing.Count -gt 0) {
                         Write-Warn "Entry points still missing after repair: $($stillMissing -join ', ')"
-                        Write-Info "Workaround: `"$pythonExe`" -m hermes_cli.main <command>"
+                        Write-Info "Workaround: `"$pythonExe`" -m syriana_cli.main <command>"
                     } else {
                         Write-Success "Console entry points restored"
                     }
@@ -2028,44 +2028,44 @@ function Set-PathVariable {
     Write-Info "Setting up syriana command..."
     
     if ($NoVenv) {
-        $hermesBin = "$InstallDir"
+        $syrianaBin = "$InstallDir"
     } else {
-        $hermesBin = "$InstallDir\venv\Scripts"
+        $syrianaBin = "$InstallDir\venv\Scripts"
     }
     
     # Add the venv Scripts dir to user PATH so syriana is globally available
-    # On Windows, the hermes.exe in venv\Scripts\ has the venv Python baked in
+    # On Windows, the syriana.exe in venv\Scripts\ has the venv Python baked in
     $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
     
-    if ($currentPath -notlike "*$hermesBin*") {
+    if ($currentPath -notlike "*$syrianaBin*") {
         [Environment]::SetEnvironmentVariable(
             "Path",
-            "$hermesBin;$currentPath",
+            "$syrianaBin;$currentPath",
             "User"
         )
-        Write-Success "Added to user PATH: $hermesBin"
+        Write-Success "Added to user PATH: $syrianaBin"
     } else {
         Write-Info "PATH already configured"
     }
     
     # Set SYRIANA_HOME so the Python code finds config/data in the right place.
-    # Only needed on Windows where we install to %LOCALAPPDATA%\hermes instead
-    # of the Unix default ~/.hermes
-    $currentHermesHome = [Environment]::GetEnvironmentVariable("SYRIANA_HOME", "User")
-    if (-not $currentHermesHome -or $currentHermesHome -ne $SyrianaHome) {
+    # Only needed on Windows where we install to %LOCALAPPDATA%\\syriana instead
+    # of the Unix default ~/.syriana
+    $currentSyrianaHome = [Environment]::GetEnvironmentVariable("SYRIANA_HOME", "User")
+    if (-not $currentSyrianaHome -or $currentSyrianaHome -ne $SyrianaHome) {
         [Environment]::SetEnvironmentVariable("SYRIANA_HOME", $SyrianaHome, "User")
         Write-Success "Set SYRIANA_HOME=$SyrianaHome"
     }
     $env:SYRIANA_HOME = $SyrianaHome
     
     # Update current session
-    $env:Path = "$hermesBin;$env:Path"
+    $env:Path = "$syrianaBin;$env:Path"
     
     Write-Success "syriana command ready"
 }
 
 function Write-BootstrapMarker {
-    # Writes $InstallDir\.hermes-bootstrap-complete which tells the Hermes
+    # Writes $InstallDir\.syriana-bootstrap-complete which tells the Syriana
     # desktop app (apps/desktop/electron/main.cjs) "install.ps1 ran
     # successfully — DON'T trigger the legacy first-launch bootstrap
     # runner."
@@ -2116,7 +2116,7 @@ function Write-BootstrapMarker {
         $pinnedBranch = "main"  # install.ps1's own default for -Branch
     }
 
-    $markerPath = Join-Path $InstallDir ".hermes-bootstrap-complete"
+    $markerPath = Join-Path $InstallDir ".syriana-bootstrap-complete"
     $marker = [ordered]@{
         schemaVersion = 1
         pinnedCommit  = $pinnedCommit
@@ -2144,7 +2144,7 @@ function Write-BootstrapMarker {
 function Copy-ConfigTemplates {
     Write-Info "Setting up configuration files..."
     
-    # Create the SYRIANA_HOME directory structure ($SyrianaHome, default %LOCALAPPDATA%\hermes)
+    # Create the SYRIANA_HOME directory structure ($SyrianaHome, default %LOCALAPPDATA%\\syriana)
     New-Item -ItemType Directory -Force -Path "$SyrianaHome\cron" | Out-Null
     New-Item -ItemType Directory -Force -Path "$SyrianaHome\sessions" | Out-Null
     New-Item -ItemType Directory -Force -Path "$SyrianaHome\logs" | Out-Null
@@ -2186,7 +2186,7 @@ function Copy-ConfigTemplates {
     # Create SOUL.md if it doesn't exist (global persona file).
     # IMPORTANT: write without a BOM.  Windows PowerShell 5.1's
     # ``Set-Content -Encoding UTF8`` writes UTF-8 WITH a byte-order-mark
-    # (the default PS5 behaviour), and Hermes's prompt-injection scanner
+    # (the default PS5 behaviour), and Syriana's prompt-injection scanner
     # flags the BOM as an invisible unicode character and refuses to
     # load the file.  PS7's ``-Encoding utf8NoBOM`` fixes that but we
     # don't control which PowerShell version the user has.  Go direct
@@ -2194,7 +2194,7 @@ function Copy-ConfigTemplates {
     # PowerShell version.
     $soulPath = "$SyrianaHome\SOUL.md"
     if (-not (Test-Path $soulPath)) {
-        # MUST match DEFAULT_SOUL_MD in hermes_cli/default_soul.py. The runtime
+        # MUST match DEFAULT_SOUL_MD in syriana_cli/default_soul.py. The runtime
         # upgrades the old comment-only scaffold to this text on next run, so
         # drift is self-healing, but keep them in sync to avoid first-run churn.
         $soulContent = @"
@@ -2342,7 +2342,7 @@ function Install-NodeDeps {
     # Browser tools
     if (Test-Path "$InstallDir\package.json") {
         Write-Info "Installing Node.js dependencies (browser tools)..."
-        $browserLog = "$env:TEMP\hermes-npm-browser-$(Get-Random).log"
+        $browserLog = "$env:TEMP\syriana-npm-browser-$(Get-Random).log"
         $browserNpmOk = _Run-NpmInstall "Browser tools" $InstallDir $browserLog $npmExe
 
         # Install Playwright Chromium (mirrors scripts/install.sh behaviour for
@@ -2369,7 +2369,7 @@ function Install-NodeDeps {
                 Write-Warn "npx not found -- cannot install Playwright Chromium."
                 Write-Info "Run manually later: cd `"$InstallDir`"; npx playwright install chromium"
             } else {
-                $pwLog = "$env:TEMP\hermes-playwright-install-$(Get-Random).log"
+                $pwLog = "$env:TEMP\syriana-playwright-install-$(Get-Random).log"
                 Push-Location $InstallDir
                 # Capture EAP outside the try block so the catch's restore call
                 # always has a meaningful value (see Install-Uv for the full
@@ -2446,7 +2446,7 @@ function Install-NodeDeps {
     $tuiDir = "$InstallDir\ui-tui"
     if (Test-Path "$tuiDir\package.json") {
         Write-Info "Installing TUI dependencies..."
-        $tuiLog = "$env:TEMP\hermes-npm-tui-$(Get-Random).log"
+        $tuiLog = "$env:TEMP\syriana-npm-tui-$(Get-Random).log"
         [void](_Run-NpmInstall "TUI" $tuiDir $tuiLog $npmExe)
     }
 }
@@ -2456,7 +2456,7 @@ function Install-NodeDeps {
 # the per-user Electron download cache - most often a partial download resumed
 # into the same file, leaving concatenated junk - makes electron-builder's
 # `app-builder unpack-electron` extract a tree MISSING the electron binary, so
-# the final `electron` -> `Hermes` rename dies with ENOENT and every re-run
+# the final `electron` -> `Syriana` rename dies with ENOENT and every re-run
 # repeats the broken extraction forever.
 #
 # We deliberately do not validate the zip ourselves: the common
@@ -2582,7 +2582,7 @@ function Install-Desktop {
     # itself, ~150MB), then run `npm run pack` in apps/desktop which
     # produces the unpacked binary at apps/desktop/release/<os>-unpacked/.
     #
-    # The Tauri bootstrap installer's launch_hermes_desktop command
+    # The Tauri bootstrap installer's launch_syriana_desktop command
     # resolves apps/desktop/release/win-unpacked/Syriana.exe directly,
     # so an "unpacked" build (electron-builder --dir) is enough — we
     # don't need to produce an NSIS/MSI artifact here.
@@ -2694,7 +2694,7 @@ function Install-Desktop {
     # apps/desktop/package.json's build.win block, electron-builder never
     # invokes signtool and therefore never fetches/extracts winCodeSign
     # (whose macOS symlinks crash 7-Zip on non-admin Windows — a dead end we
-    # are NOT trying to work around). The Hermes icon + product name are
+    # are NOT trying to work around). The Syriana icon + product name are
     # stamped onto Syriana.exe by our own rcedit step (Set-DesktopExeIdentity)
     # AFTER this build, completely decoupled from electron-builder signing.
     #
@@ -2702,7 +2702,7 @@ function Install-Desktop {
     # belt-and-suspenders: if the user's environment has them set
     # for some other tool, electron-builder would still try to sign.
     Write-Info "Building desktop app (this takes 1-3 minutes)..."
-    $buildLog = "$env:TEMP\hermes-desktop-build-$(Get-Random).log"
+    $buildLog = "$env:TEMP\syriana-desktop-build-$(Get-Random).log"
     Push-Location $desktopDir
     $prevEAP = $ErrorActionPreference
     $prevCSCAuto = $env:CSC_IDENTITY_AUTO_DISCOVERY
@@ -2793,7 +2793,7 @@ function Install-Desktop {
         throw "Desktop build completed but no Syriana.exe was found under $desktopDir\release\*-unpacked\"
     }
 
-    # 3b. The Hermes icon + identity are stamped onto Syriana.exe by the
+    # 3b. The Syriana icon + identity are stamped onto Syriana.exe by the
     #     electron-builder `afterPack` hook (apps/desktop/scripts/after-pack.cjs)
     #     during `npm run pack` above — for every build, so the installer's
     #     --update rebuild stays branded too. No separate stamp step needed here.
@@ -2833,8 +2833,8 @@ function New-DesktopShortcuts {
         }
 
         $targets = @(
-            (Join-Path ([Environment]::GetFolderPath('Programs')) 'Hermes.lnk'),
-            (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Hermes.lnk')
+            (Join-Path ([Environment]::GetFolderPath('Programs')) 'Syriana.lnk'),
+            (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Syriana.lnk')
         )
 
         foreach ($lnkPath in $targets) {
@@ -2858,7 +2858,7 @@ function New-DesktopShortcuts {
         # Bust the Windows shell icon cache so the desktop/Start-Menu shortcut
         # repaints with the (possibly newly-stamped) icon instead of a stale
         # cached bitmap. Critical on the --update path: the exe was re-stamped
-        # with the Hermes icon, but without this the shortcut can keep drawing
+        # with the Syriana icon, but without this the shortcut can keep drawing
         # the old Electron icon until the user manually refreshes / reboots.
         # Best-effort and silent — never fail the install over a cosmetic cache.
         try {
@@ -2873,7 +2873,7 @@ function New-DesktopShortcuts {
 
 function Install-PlatformSdks {
     # Ensure messaging-platform SDKs matching tokens the user added to
-    # ~/.hermes/.env are importable.  Two problems this solves:
+    # ~/.syriana/.env are importable.  Two problems this solves:
     #
     # 1. The tiered `uv pip install` cascade above can fall through to a
     #    lower tier when the first fails (common when RL git deps choke),
@@ -3002,9 +3002,9 @@ function Invoke-SetupWizard {
 
     # Run syriana setup using the venv Python directly (no activation needed)
     if (-not $NoVenv) {
-        & ".\venv\Scripts\python.exe" -m hermes_cli.main setup
+        & ".\venv\Scripts\python.exe" -m syriana_cli.main setup
     } else {
-        python -m hermes_cli.main setup
+        python -m syriana_cli.main setup
     }
 
     Pop-Location
@@ -3023,9 +3023,9 @@ function Start-GatewayIfConfigured {
 
     if (-not $hasMessaging) { return }
 
-    $hermesCmd = "$InstallDir\venv\Scripts\hermes.exe"
-    if (-not (Test-Path $hermesCmd)) {
-        $hermesCmd = "hermes"
+    $syrianaCmd = "$InstallDir\venv\Scripts\syriana.exe"
+    if (-not (Test-Path $syrianaCmd)) {
+        $syrianaCmd = "syriana"
     }
 
     # If WhatsApp is enabled but not yet paired, run foreground for QR scan
@@ -3043,7 +3043,7 @@ function Start-GatewayIfConfigured {
             $response = Read-Host "Pair WhatsApp now? [Y/n]"
             if ($response -eq "" -or $response -match "^[Yy]") {
                 try {
-                    & $hermesCmd whatsapp
+                    & $syrianaCmd whatsapp
                 } catch {
                     # Expected after pairing completes
                 }
@@ -3073,7 +3073,7 @@ function Start-GatewayIfConfigured {
         Write-Info "Starting gateway in background..."
         try {
             $logFile = "$SyrianaHome\logs\gateway.log"
-            Start-Process -FilePath $hermesCmd -ArgumentList "gateway" `
+            Start-Process -FilePath $syrianaCmd -ArgumentList "gateway" `
                 -RedirectStandardOutput $logFile `
                 -RedirectStandardError "$SyrianaHome\logs\gateway-error.log" `
                 -WindowStyle Hidden
@@ -3224,7 +3224,7 @@ $InstallStages = @(
     @{ Name = "git";              Title = "Installing Git";                       Category = "prereqs";      NeedsUserInput = $false; Worker = "Stage-Git" }
     @{ Name = "node";             Title = "Detecting Node.js";                    Category = "prereqs";      NeedsUserInput = $false; Worker = "Stage-Node" }
     @{ Name = "system-packages";  Title = "Installing ripgrep and ffmpeg";        Category = "prereqs";      NeedsUserInput = $false; Worker = "Stage-SystemPackages" }
-    @{ Name = "repository";       Title = "Cloning Hermes repository";            Category = "install";      NeedsUserInput = $false; Worker = "Stage-Repository" }
+    @{ Name = "repository";       Title = "Cloning Syriana repository";            Category = "install";      NeedsUserInput = $false; Worker = "Stage-Repository" }
     @{ Name = "venv";             Title = "Creating Python virtual environment";  Category = "install";      NeedsUserInput = $false; Worker = "Stage-Venv" }
     @{ Name = "dependencies";     Title = "Installing Python dependencies";       Category = "install";      NeedsUserInput = $false; Worker = "Stage-Dependencies" }
     @{ Name = "node-deps";        Title = "Installing Node.js dependencies";      Category = "install";      NeedsUserInput = $false; Worker = "Stage-NodeDeps" }
@@ -3236,7 +3236,7 @@ if ($IncludeDesktop) {
     $InstallStages += @{ Name = "desktop"; Title = "Building desktop app"; Category = "install"; NeedsUserInput = $false; Worker = "Stage-Desktop" }
 }
 $InstallStages += @(
-    @{ Name = "path";             Title = "Adding Hermes to PATH";                Category = "finalize";     NeedsUserInput = $false; Worker = "Stage-Path" }
+    @{ Name = "path";             Title = "Adding Syriana to PATH";                Category = "finalize";     NeedsUserInput = $false; Worker = "Stage-Path" }
     @{ Name = "config-templates"; Title = "Writing configuration templates";      Category = "finalize";     NeedsUserInput = $false; Worker = "Stage-ConfigTemplates" }
     @{ Name = "platform-sdks";    Title = "Installing messaging platform SDKs";   Category = "finalize";     NeedsUserInput = $false; Worker = "Stage-PlatformSdks" }
     @{ Name = "bootstrap-marker"; Title = "Marking install complete";              Category = "finalize";     NeedsUserInput = $false; Worker = "Stage-BootstrapMarker" }
@@ -3523,7 +3523,7 @@ try {
     Write-Err "Installation failed: $_"
     Write-Host ""
     Write-Info "If the error is unclear, try downloading and running the script directly:"
-    Write-Host "  Invoke-WebRequest -Uri 'https://syriana-agent.fixology.dev/install.ps1' -OutFile install.ps1" -ForegroundColor Yellow
+    Write-Host "  Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.ps1' -OutFile install.ps1" -ForegroundColor Yellow
     Write-Host "  .\install.ps1" -ForegroundColor Yellow
     Write-Host ""
 }
