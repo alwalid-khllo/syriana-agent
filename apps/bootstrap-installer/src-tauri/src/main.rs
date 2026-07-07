@@ -1,4 +1,4 @@
-// Hermes Setup — process entrypoint. All logic lives in lib.rs so it can
+// Syriana Setup — process entrypoint. All logic lives in lib.rs so it can
 // be unit-tested as a library; this file just calls into it.
 //
 // The windows_subsystem attribute MUST live here on the binary crate
@@ -15,5 +15,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    hermes_bootstrap_lib::run()
+    syriana_bootstrap_lib::run()
 }

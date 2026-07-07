@@ -17,7 +17,7 @@ body:
       label: Problem or Use Case
       description: What problem does this solve? What are you trying to do that you can't today?
       placeholder: |
-        I'm trying to use Hermes with [provider/platform/workflow] but currently
+        I'm trying to use Syriana with [provider/platform/workflow] but currently
         there's no way to...
     validations:
       required: true

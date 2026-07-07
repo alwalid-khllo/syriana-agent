@@ -1,9 +1,9 @@
-# nix/hermes-agent.nix — Overridable Syriana Agent package
+# nix/syriana-agent.nix — Overridable Syriana Agent package
 #
 # callPackage auto-wires nixpkgs args; flake inputs are passed explicitly.
 # Users override via:
-#   pkgs.hermes-agent.override { extraPythonPackages = [...]; }
-#   pkgs.hermes-agent.override { extraDependencyGroups = [ "hindsight" ]; }
+#   pkgs.syriana-agent.override { extraPythonPackages = [...]; }
+#   pkgs.syriana-agent.override { extraDependencyGroups = [ "hindsight" ]; }
 {
   lib,
   stdenv,
@@ -37,25 +37,25 @@
 }:
 let
   nodejs = nodejs_22;
-  mkHermesVenv =
+  mkSyrianaVenv =
     extraDependencyGroups:
     callPackage ./python.nix {
       inherit uv2nix pyproject-nix pyproject-build-systems;
       dependency-groups = [ "all" ] ++ extraDependencyGroups;
     };
 
-  hermesVenv = mkHermesVenv extraDependencyGroups;
+  syrianaVenv = mkSyrianaVenv extraDependencyGroups;
 
-  hermesNpmLib = callPackage ./lib.nix {
+  syrianaNpmLib = callPackage ./lib.nix {
     inherit npm-lockfile-fix nodejs;
   };
 
-  hermesTui = callPackage ./tui.nix {
-    inherit hermesNpmLib;
+  syrianaTui = callPackage ./tui.nix {
+    inherit syrianaNpmLib;
   };
 
-  hermesWeb = callPackage ./web.nix {
-    inherit hermesNpmLib;
+  syrianaWeb = callPackage ./web.nix {
+    inherit syrianaNpmLib;
   };
 
   bundledSkills = lib.cleanSourceWith {
@@ -118,7 +118,7 @@ let
 
     # Collect core venv package names
     core = set()
-    venv_sp = pathlib.Path('${hermesVenv}/${sitePackagesPath}')
+    venv_sp = pathlib.Path('${syrianaVenv}/${sitePackagesPath}')
     for di in venv_sp.glob('*.dist-info'):
         meta = di / 'METADATA'
         if meta.exists():
@@ -151,7 +151,7 @@ let
   '';
 in
 stdenv.mkDerivation (finalAttrs: {
-  pname = "hermes-agent";
+  pname = "syriana-agent";
   version = (fromTOML (builtins.readFile ../pyproject.toml)).project.version;
 
   dontUnpack = true;
@@ -161,39 +161,39 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/hermes-agent $out/bin
-    cp -r ${bundledSkills} $out/share/hermes-agent/skills
-    cp -r ${bundledPlugins} $out/share/hermes-agent/plugins
-    cp -r ${bundledLocales} $out/share/hermes-agent/locales
-    cp -r ${hermesWeb} $out/share/hermes-agent/web_dist
+    mkdir -p $out/share/syriana-agent $out/bin
+    cp -r ${bundledSkills} $out/share/syriana-agent/skills
+    cp -r ${bundledPlugins} $out/share/syriana-agent/plugins
+    cp -r ${bundledLocales} $out/share/syriana-agent/locales
+    cp -r ${syrianaWeb} $out/share/syriana-agent/web_dist
 
     mkdir -p $out/ui-tui
-    cp -r ${hermesTui}/lib/hermes-tui/* $out/ui-tui/
+    cp -r ${syrianaTui}/lib/syriana-tui/* $out/ui-tui/
 
     ${lib.concatMapStringsSep "\n"
       (name: ''
-        makeWrapper ${hermesVenv}/bin/${name} $out/bin/${name} \
+        makeWrapper ${syrianaVenv}/bin/${name} $out/bin/${name} \
           --suffix PATH : "${runtimePath}" \
-          --set SYRIANA_BUNDLED_SKILLS $out/share/hermes-agent/skills \
-          --set SYRIANA_BUNDLED_PLUGINS $out/share/hermes-agent/plugins \
-          --set SYRIANA_BUNDLED_LOCALES $out/share/hermes-agent/locales \
-          --set SYRIANA_WEB_DIST $out/share/hermes-agent/web_dist \
+          --set SYRIANA_BUNDLED_SKILLS $out/share/syriana-agent/skills \
+          --set SYRIANA_BUNDLED_PLUGINS $out/share/syriana-agent/plugins \
+          --set SYRIANA_BUNDLED_LOCALES $out/share/syriana-agent/locales \
+          --set SYRIANA_WEB_DIST $out/share/syriana-agent/web_dist \
           --set SYRIANA_TUI_DIR $out/ui-tui \
-          --set SYRIANA_PYTHON ${hermesVenv}/bin/python3 \
+          --set SYRIANA_PYTHON ${syrianaVenv}/bin/python3 \
           --set SYRIANA_NODE ${lib.getExe nodejs} \
           ${lib.optionalString (rev != null) ''--set SYRIANA_REVISION ${rev} \''}
           ${lib.optionalString (extraPythonPackages != [ ]) ''--suffix PYTHONPATH : "${pythonPath}"''}
       '')
       [
-        "hermes"
-        "hermes-agent"
-        "hermes-acp"
+        "syriana"
+        "syriana-agent"
+        "syriana-acp"
       ]
     }
 
     ${lib.optionalString (extraPythonPackages != [ ]) ''
       echo "=== Checking for plugin/core package collisions ==="
-      ${hermesVenv}/bin/python3 -c "${checkPackageCollisions}"
+      ${syrianaVenv}/bin/python3 -c "${checkPackageCollisions}"
       echo "=== No collisions ==="
     ''}
 
@@ -202,35 +202,35 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     inherit
-      hermesTui
-      hermesWeb
-      hermesNpmLib
-      hermesVenv
+      syrianaTui
+      syrianaWeb
+      syrianaNpmLib
+      syrianaVenv
       ;
 
-    # `hermesDesktop` references `finalAttrs.finalPackage` (this whole
+    # `syrianaDesktop` references `finalAttrs.finalPackage` (this whole
     # derivation, after all overrides are applied) so the desktop wrapper
     # can prepend its `/bin` to PATH.  The desktop's resolver step 4
     # ("existing syriana on PATH") then picks up the fully wrapped
-    # `hermes` binary — venv with all deps, bundled skills/plugins,
+    # `syriana` binary — venv with all deps, bundled skills/plugins,
     # runtime PATH (ripgrep/git/ffmpeg/etc).  No re-implementation
     # of the agent resolution in the desktop wrapper.
-    hermesDesktop = callPackage ./desktop.nix {
-      inherit hermesNpmLib electron;
+    syrianaDesktop = callPackage ./desktop.nix {
+      inherit syrianaNpmLib electron;
       hermesAgent = finalAttrs.finalPackage;
     };
 
     devShellHook = ''
-      export SYRIANA_PYTHON=${hermesVenv}/bin/python3
+      export SYRIANA_PYTHON=${syrianaVenv}/bin/python3
     '';
 
-    devDeps = runtimeDeps ++ [ (mkHermesVenv (extraDependencyGroups ++ [ "dev" ])) ];
+    devDeps = runtimeDeps ++ [ (mkSyrianaVenv (extraDependencyGroups ++ [ "dev" ])) ];
   };
 
   meta = with lib; {
     description = "AI agent with advanced tool-calling capabilities";
-    homepage = "https://github.com/SyrianaAIResearch/hermes-agent";
-    mainProgram = "hermes";
+    homepage = "https://github.com/SyrianaAIResearch/syriana-agent";
+    mainProgram = "syriana";
     license = licenses.mit;
     platforms = platforms.unix;
   };

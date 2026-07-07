@@ -173,7 +173,7 @@ async function main() {
     }
   }
 
-  writeFileSync('/tmp/hermes-latency-samples.json', JSON.stringify(samples, null, 2))
+  writeFileSync('/tmp/syriana-latency-samples.json', JSON.stringify(samples, null, 2))
 
   cdp.close()
 }

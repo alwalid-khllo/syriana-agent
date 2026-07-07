@@ -2,7 +2,7 @@
 # default (config key: kanban.dispatch_in_gateway, default true). To
 # migrate:
 #
-#     systemctl --user disable --now hermes-kanban-dispatcher.service
+#     systemctl --user disable --now syriana-kanban-dispatcher.service
 #     # then make sure a gateway is running; e.g. a systemd user unit
 #     # for `syriana gateway start`. The gateway hosts the dispatcher.
 #
@@ -14,13 +14,13 @@
 # dispatch_in_gateway=true is NOT supported.
 
 [Unit]
-Description=Hermes Kanban dispatcher (DEPRECATED standalone daemon — prefer gateway-embedded dispatch)
+Description=Syriana Kanban dispatcher (DEPRECATED standalone daemon — prefer gateway-embedded dispatch)
 Documentation=https://syriana-agent.fixology.dev/docs/user-guide/features/kanban
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/env syriana kanban daemon --force --interval 60 --pidfile %t/hermes-kanban-dispatcher.pid
+ExecStart=/usr/bin/env syriana kanban daemon --force --interval 60 --pidfile %t/syriana-kanban-dispatcher.pid
 Restart=on-failure
 RestartSec=5
 # Log to the journal via stdout/stderr; the dispatcher also writes per-task

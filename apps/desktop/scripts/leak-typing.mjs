@@ -211,8 +211,8 @@ async function main() {
     console.log(`  ${c.padEnd(16)}  Δtotal=${delta.toFixed(2).padStart(10)}  /round=${per.toFixed(2).padStart(8)}  /char=${perChar.toFixed(4).padStart(8)}`)
   }
 
-  writeFileSync('/tmp/hermes-leak-history.json', JSON.stringify(history, null, 2))
-  log('wrote /tmp/hermes-leak-history.json')
+  writeFileSync('/tmp/syriana-leak-history.json', JSON.stringify(history, null, 2))
+  log('wrote /tmp/syriana-leak-history.json')
   cdp.close()
 }
 

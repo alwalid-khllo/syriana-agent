@@ -855,5 +855,5 @@ syriana chat -q "hello" --model anthropic/claude-opus-4.7
 如果您的问题未在此处涵盖：
 
 1. **搜索现有 issue：** [GitHub Issues](https://github.com/SyrianaAIResearch/syriana-agent/issues)
-2. **向社区提问：** [syriana ai Research Discord](https://discord.gg/nousresearch)
+2. **向社区提问：** [syriana ai Research Discord](https://discord.gg/fixology)
 3. **提交 bug 报告：** 请包含您的操作系统、Python 版本（`python3 --version`）、Syriana 版本（`syriana --version`）以及完整的错误信息

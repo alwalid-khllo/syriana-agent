@@ -11,7 +11,7 @@
 #
 services:
   gateway:
-    image: nousresearch/syriana-agent:latest
+    image: fixology/syriana-agent:latest
     container_name: syriana
     restart: unless-stopped
     volumes:
@@ -22,7 +22,7 @@ services:
     command: ["gateway", "run"]
 
   dashboard:
-    image: nousresearch/syriana-agent:latest
+    image: fixology/syriana-agent:latest
     container_name: syriana-dashboard
     restart: unless-stopped
     depends_on:

@@ -210,7 +210,7 @@ async fn download(kind: ScriptKind, commit_or_ref: &str, dest_path: &Path) -> Re
 
     let response = reqwest::Client::new()
         .get(&url)
-        .header("User-Agent", "hermes-setup/0.0.1")
+        .header("User-Agent", "syriana-setup/0.0.1")
         .send()
         .await
         .with_context(|| format!("GET {url}"))?;
