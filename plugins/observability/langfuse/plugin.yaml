@@ -1,0 +1,14 @@
+name: langfuse
+version: "1.0.0"
+description: "Optional Langfuse observability for Syriana — traces conversations, LLM calls, and tool usage. Opt-in via `syriana plugins enable observability/langfuse` or `syriana tools → Langfuse Observability`."
+author: SyrianaAIResearch
+requires_env:
+  - SYRIANA_LANGFUSE_PUBLIC_KEY
+  - SYRIANA_LANGFUSE_SECRET_KEY
+hooks:
+  - pre_api_request
+  - post_api_request
+  - pre_llm_call
+  - post_llm_call
+  - pre_tool_call
+  - post_tool_call
