@@ -118,6 +118,19 @@ Run it on a **$5 VPS**, a **GPU cluster**, or **serverless infrastructure** that
 
 Linux, macOS, Windows (native + WSL2), Android (Termux) — full support on every platform.
 
+### 📋 Prerequisites
+
+| Requirement | Notes |
+|-------------|-------|
+| **Python 3.11–3.13** | The installer (uv) will install it if missing |
+| **Git** | Required for installer and updates |
+| **Internet connection** | For downloading packages |
+| **API key** | From any AI provider (OpenAI, OpenRouter, Claude, DeepSeek, etc.) |
+| **Node.js 20+** | Optional — needed for browser automation tools and WhatsApp |
+| **ffmpeg** | Optional — needed for media creation skills |
+
+> 💡 **Don't have a Python environment?** Don't worry — the installer handles everything automatically. It installs Python (via uv), creates a virtual environment, and wires up the `syriana` command for you.
+
 ### Quick Install
 
 **Linux / macOS / WSL:**
@@ -137,7 +150,7 @@ powershell -ExecutionPolicy ByPass -c "iex (irm https://raw.githubusercontent.co
 ```bash
 pkg update && pkg upgrade -y
 pkg install python git curl -y
-pip install syriana-agent --no-deps
+pip install git+https://github.com/alwalid-khllo/syriana-agent.git --no-deps
 ```
 
 ### After Installation
@@ -279,6 +292,54 @@ syriana model
 انشر على البنية التحتية التي تناسب احتياجاتك: محلي، Docker، SSH، سيرفرلس.
 
 شغّله على **VPS بـ 5$** أو **عنقود GPU** أو **بنية تحتية serverless** لا تكلف شيئاً عند الخمول.
+
+---
+
+### 📋 المتطلبات الأساسية
+
+| المتطلبات | ملاحظات |
+|-----------|---------|
+| **Python 3.11–3.13** | المثبّت (uv) يقوم بتثبيته تلقائياً |
+| **Git** | مطلوب للتثبيت والتحديثات |
+| **اتصال بالإنترنت** | لتحميل الحزم والمكتبات |
+| **مفتاح API** | من أي مزوّد (OpenAI, OpenRouter, Claude, DeepSeek, إلخ) |
+| **Node.js 20+** | اختياري — لأدوات المتصفح وواتساب |
+| **ffmpeg** | اختياري — لمهارات إنشاء الوسائط |
+
+### 🚀 تثبيت سريع
+
+**لينكس / ماك / WSL:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.sh | bash
+```
+
+**ويندوز (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -c "iex (irm https://raw.githubusercontent.com/alwalid-khllo/syriana-agent/main/scripts/install.ps1)"
+```
+
+**أندرويد (Termux):**
+```bash
+pkg update && pkg upgrade -y
+pkg install python git curl -y
+pip install git+https://github.com/alwalid-khllo/syriana-agent.git --no-deps
+```
+
+### بعد التثبيت
+
+```bash
+# ضع مفتاح API (أي مزوّد)
+syriana config set OPENROUTER_API_KEY مفتاحك_هنا
+
+# ابدأ الدردشة
+syriana chat
+
+# شغّل البوابة لتلغرام / دسكورد
+syriana gateway run
+
+# حدّث إلى آخر إصدار
+syriana update
+```
 
 ---
 
