@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "source": "Telegram",
+    "author": "Syriana Team",
+    "url": "https://t.me/syriana_ai",
+    "date": "2026-07-01",
+    "category": "dev-workflow",
+    "headline": "AI-Powered Development",
+    "quote": "Syriana Agent transformed how we build software — from code review to deployment, it's like having a senior engineer pair-programming with you 24/7.",
+    "size": "lg"
+  },
+  {
+    "id": "2",
+    "source": "GitHub",
+    "author": "Open Source Community",
+    "url": "https://github.com/alwalid-khllo/syriana-agent",
+    "date": "2026-07-01",
+    "category": "personal-assistant",
+    "headline": "Your Personal AI Agent",
+    "quote": "Multi-provider, cross-platform, self-improving. Syriana learns from every interaction and gets better over time.",
+    "size": "md"
+  },
+  {
+    "id": "3",
+    "source": "CLI",
+    "author": "Power Users",
+    "url": "https://github.com/alwalid-khllo/syriana-agent",
+    "date": "2026-07-01",
+    "category": "automation",
+    "headline": "Automate Everything",
+    "quote": "Scheduled jobs, subagent delegation, MCP servers — Syriana runs your workflows while you sleep.",
+    "size": "sm"
+  },
+  {
+    "id": "4",
+    "source": "Documentation",
+    "author": "Developers",
+    "url": "https://github.com/alwalid-khllo/syriana-agent",
+    "date": "2026-07-01",
+    "category": "research",
+    "headline": "Research & Discovery",
+    "quote": "Web search, YouTube transcripts, arXiv papers, blog monitoring — Syriana keeps you informed across every domain.",
+    "size": "sm"
+  }
+]
