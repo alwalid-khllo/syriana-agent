@@ -52,7 +52,7 @@ The more you use it, the better it gets. It learns like a person — by doing, r
 
 ## 🛠️ Built-in Skills — 450+ Capabilities
 
-Syriana ships with a **450+ skill library** that gives it superpowers across every domain:
+Syriana ships with a **70+ skill library** that gives it superpowers across every domain:
 
 | Domain | Skills |
 |--------|--------|
@@ -106,8 +106,8 @@ Run it on a **$5 VPS**, a **GPU cluster**, or **serverless infrastructure** that
 
 ## 🔌 Extensible Architecture
 
-- **30+ plugins** — Modular extensions for custom functionality (kanban, browser, image gen, cron, disk cleanup, and more)
-- **450+ skills** — Built-in capability library. Also compatible with [agentskills.io](https://agentskills.io) open standard
+- **18+ plugins** — Modular extensions for custom functionality (kanban, browser, image gen, cron, disk cleanup, and more)
+- **70+ skills** — Built-in capability library. Also compatible with [agentskills.io](https://agentskills.io) open standard
 - **MCP servers** — Connect any MCP-compatible tool with full tool filtering
 - **Custom Python tools** — Write your own via `execute_code`
 - **Subagent delegation** — Spawn isolated subagents for parallel workstreams
